@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   FiBookmark,
   FiCheck,
@@ -6,21 +7,31 @@ import {
   FiCloud,
   FiDownload,
   FiFolder,
+  FiGrid,
   FiHeart,
-  FiHardDrive,
+  FiList,
+  FiLogIn,
+  FiLogOut,
   FiMenu,
+  FiMoon,
   FiPlus,
   FiSearch,
   FiSettings,
   FiSliders,
   FiStar,
+  FiSun,
   FiUpload,
+  FiUser,
+  FiUserPlus,
   FiX,
 } from 'react-icons/fi'
 import LinkCard from '../features/links/components/LinkCard.jsx'
 import LinkModal from '../features/links/components/LinkModal.jsx'
 import CollectionModal from '../features/links/components/CollectionModal.jsx'
 import useLinksStore from '../features/links/store/useLinksStore.js'
+import useDemoAuthStore from '../features/auth/store/useDemoAuthStore.js'
+import usePreferencesStore from '../features/settings/store/usePreferencesStore.js'
+import SettingsModal from '../features/settings/components/SettingsModal.jsx'
 import { filterAndSortLinks, getCollectionCount } from '../features/links/utils/linkUtils.js'
 import './HomePage.css'
 
@@ -32,6 +43,12 @@ const sortOptions = [
 ]
 
 export default function HomePage() {
+  const navigate = useNavigate()
+  const user = useDemoAuthStore((state) => state.user)
+  const theme = usePreferencesStore((state) => state.theme)
+  const toggleTheme = usePreferencesStore((state) => state.toggleTheme)
+  const viewMode = usePreferencesStore((state) => state.viewMode)
+  const setViewMode = usePreferencesStore((state) => state.setViewMode)
   const links = useLinksStore((state) => state.links)
   const collections = useLinksStore((state) => state.collections)
   const addLink = useLinksStore((state) => state.addLink)
@@ -51,6 +68,7 @@ export default function HomePage() {
   const [linkModalOpen, setLinkModalOpen] = useState(false)
   const [editingLink, setEditingLink] = useState(null)
   const [collectionModalOpen, setCollectionModalOpen] = useState(false)
+  const [settingsOpen, setSettingsOpen] = useState(false)
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
   const [toolsOpen, setToolsOpen] = useState(false)
   const [toast, setToast] = useState('')
@@ -215,7 +233,7 @@ export default function HomePage() {
     : `${visibleLinks.length} bookmark${visibleLinks.length === 1 ? '' : 's'}`
 
   return (
-    <div className="app-shell">
+    <div className="app-shell" data-theme={theme}>
       <button
         type="button"
         className={mobileSidebarOpen ? 'mobile-sidebar-backdrop is-open' : 'mobile-sidebar-backdrop'}
@@ -230,6 +248,30 @@ export default function HomePage() {
             <span>LinkVault</span>
           </a>
         </div>
+
+        <section className="sidebar-account" aria-label="Account">
+          <div className="sidebar-account-avatar">
+            {user ? user.fullName.slice(0, 1).toUpperCase() : <FiUser />}
+          </div>
+          <div className="sidebar-account-copy">
+            <strong>{user ? user.fullName : 'Guest workspace'}</strong>
+            <span>{user ? user.email : 'Browsing without an account'}</span>
+            {user ? (
+              <button className="account-action signout-action" type="button" onClick={() => navigate('/logout')}>
+                <FiLogOut /> Sign out
+              </button>
+            ) : (
+              <div className="account-action-row">
+                <button className="account-action primary-account-action" type="button" onClick={() => navigate('/login')}>
+                  <FiLogIn /> Sign in
+                </button>
+                <button className="account-action" type="button" onClick={() => navigate('/register')}>
+                  <FiUserPlus /> Create account
+                </button>
+              </div>
+            )}
+          </div>
+        </section>
 
         <nav className="sidebar-nav" aria-label="Main navigation">
           <section className="nav-section">
@@ -291,19 +333,10 @@ export default function HomePage() {
         </nav>
 
         <div className="sidebar-bottom">
-          <div className="storage-card">
-            <span className="storage-icon"><FiHardDrive /></span>
-            <div>
-              <strong>Saved on this device</strong>
-              <span>Your vault stays in this browser.</span>
-            </div>
-            <span className="storage-status" title="Local storage active"><FiCheck /></span>
-          </div>
-          <div className="sidebar-footer">
-            <span className="sidebar-footer-logo"><FiBookmark /></span>
-            <span>LinkVault <small>Personal workspace</small></span>
-            <FiSettings className="sidebar-footer-settings" />
-          </div>
+          <button className="settings-nav-button" type="button" onClick={() => setSettingsOpen(true)}>
+            <FiSettings />
+            <span>Settings</span>
+          </button>
         </div>
       </aside>
 
@@ -337,6 +370,19 @@ export default function HomePage() {
               </select>
               <FiChevronDown className="sort-chevron" />
             </label>
+
+            <div className="display-mode-control" role="group" aria-label="Bookmark display mode">
+              <button type="button" className={viewMode === 'grid' ? 'display-mode-button is-active' : 'display-mode-button'} onClick={() => setViewMode('grid')} aria-label="Grid view" aria-pressed={viewMode === 'grid'} title="Grid view">
+                <FiGrid />
+              </button>
+              <button type="button" className={viewMode === 'list' ? 'display-mode-button is-active' : 'display-mode-button'} onClick={() => setViewMode('list')} aria-label="List view" aria-pressed={viewMode === 'list'} title="List view">
+                <FiList />
+              </button>
+            </div>
+
+            <button className="icon-button theme-toggle-button" type="button" onClick={toggleTheme} aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'} title={theme === 'dark' ? 'Light theme' : 'Dark theme'}>
+              {theme === 'dark' ? <FiSun /> : <FiMoon />}
+            </button>
 
             <div className="tools-menu-wrap">
               <button className="icon-button tools-button" type="button" onClick={() => setToolsOpen((value) => !value)} aria-label="Backup and restore" aria-expanded={toolsOpen} title="Backup and restore">
@@ -394,7 +440,7 @@ export default function HomePage() {
               )}
             </section>
           ) : (
-            <section className="bookmark-grid" aria-label="Saved bookmarks">
+            <section className={viewMode === 'list' ? 'bookmark-grid is-list' : 'bookmark-grid'} aria-label="Saved bookmarks">
               {visibleLinks.map((link) => (
                 <LinkCard
                   key={link.id}
@@ -410,7 +456,7 @@ export default function HomePage() {
           )}
 
           <footer className="content-footer">
-            <span><FiHardDrive /> Your changes are saved automatically on this device.</span>
+            <span>LinkVault · Personal bookmark workspace</span>
             <button className="footer-action" type="button" onClick={handleExport}><FiDownload /> Export your vault</button>
           </footer>
         </div>
@@ -427,6 +473,14 @@ export default function HomePage() {
         open={collectionModalOpen}
         onClose={() => setCollectionModalOpen(false)}
         onSave={createCollection}
+      />
+      <SettingsModal
+        open={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+        theme={theme}
+        onThemeChange={usePreferencesStore.getState().setTheme}
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
       />
 
       {toast && <div className="toast-message" role="status"><FiCheck /> {toast}</div>}
