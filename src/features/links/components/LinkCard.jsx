@@ -3,7 +3,7 @@ import {
   FiExternalLink,
   FiEdit2,
   FiTrash2,
-  FiHeart,
+  FiStar,
   FiGlobe,
   FiBookmark,
 } from 'react-icons/fi'
@@ -73,7 +73,7 @@ export default function LinkCard({ link, collection, onFavorite, onEdit, onDelet
             aria-pressed={link.favorite}
             title={link.favorite ? 'Remove from favorites' : 'Add to favorites'}
           >
-            <FiHeart />
+            <FiStar />
           </button>
           <button className="bookmark-action" type="button" onClick={() => onEdit(link)} aria-label={`Edit ${link.title}`} title="Edit bookmark">
             <FiEdit2 />
