@@ -59,7 +59,7 @@ export default function AuthPage({ mode = 'login' }) {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [notice, setNotice] = useState(location.state?.message || '')
-  const [code, setCode] = useState('')
+  const [code, setCode] = useState(['', '', '', '', '', ''])
   const [secondsLeft, setSecondsLeft] = useState(36)
   const codeRefs = useRef([])
   const config = pageConfig[mode] || pageConfig.login
@@ -68,7 +68,6 @@ export default function AuthPage({ mode = 'login' }) {
   const isForgot = mode === 'forgot-password'
   const isVerify = mode === 'verify-code'
   const isReset = mode === 'reset-password'
-  const emailLabel = isReset ? 'Verified Email' : isVerify ? 'Email address' : 'Email address'
 
   useEffect(() => {
     setNotice(location.state?.message || '')
@@ -131,11 +130,12 @@ export default function AuthPage({ mode = 'login' }) {
 
   const submitCode = (event) => {
     event.preventDefault()
-    if (code.length !== 6) {
+    const enteredCode = code.join('')
+    if (enteredCode.length !== 6) {
       setNotice('Enter all 6 digits to continue.')
       return
     }
-    if (code !== '123456') {
+    if (enteredCode !== '123456') {
       setNotice('For this demo, enter the preview code 123456.')
       return
     }
@@ -145,16 +145,17 @@ export default function AuthPage({ mode = 'login' }) {
   const changeCode = (index, value) => {
     const digits = value.replace(/\D/g, '')
     if (digits.length > 1) {
-      const next = digits.slice(0, 6)
-      setCode(next)
+      const next = digits.slice(0, 6).split('')
+      setCode([...next, '', '', '', '', '', ''].slice(0, 6))
       codeRefs.current[Math.min(next.length, 5)]?.focus()
       setNotice('')
       return
     }
-    const next = code.padEnd(6, ' ').split('')
-    next[index] = digits || ''
-    const normalized = next.join('').replace(/ /g, '').slice(0, 6)
-    setCode(normalized)
+    setCode((current) => {
+      const next = [...current]
+      next[index] = digits || ''
+      return next
+    })
     if (digits && index < 5) codeRefs.current[index + 1]?.focus()
     setNotice('')
   }
@@ -167,6 +168,7 @@ export default function AuthPage({ mode = 'login' }) {
 
   const resendCode = () => {
     setSecondsLeft(36)
+    setCode(['', '', '', '', '', ''])
     setNotice('A new preview code is ready: 123456. No email was sent in demo mode.')
   }
 
@@ -298,7 +300,7 @@ export default function AuthPage({ mode = 'login' }) {
                     onKeyDown={(event) => handleCodeKeyDown(index, event)}
                     onPaste={(event) => {
                       const pasted = event.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6)
-                      if (pasted) { event.preventDefault(); setCode(pasted); codeRefs.current[Math.min(pasted.length, 5)]?.focus() }
+                      if (pasted) { event.preventDefault(); setCode([...pasted.split(''), '', '', '', '', '', ''].slice(0, 6)); codeRefs.current[Math.min(pasted.length, 5)]?.focus() }
                     }}
                     inputMode="numeric"
                     pattern="[0-9]*"
@@ -308,6 +310,7 @@ export default function AuthPage({ mode = 'login' }) {
                 ))}
               </div>
               <div className="auth-resend-row">
+                <span className="auth-demo-code-hint">Demo code: 123456</span>
                 {secondsLeft > 0 ? (
                   <span>Didn't get a code? Resend in <strong>00:{String(secondsLeft).padStart(2, '0')}</strong></span>
                 ) : (
