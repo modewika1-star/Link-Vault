@@ -5,11 +5,14 @@ const emailField = Yup.string()
   .email('Enter a valid email address')
   .required('Email is required')
 
+const passwordField = Yup.string()
+  .required('Password is required')
+  .min(8, 'Password must be at least 8 characters')
+
 const loginSchema = Yup.object({
   email: emailField,
-  password: Yup.string()
-    .required('Password is required')
-    .min(8, 'Password must be at least 8 characters'),
+  password: passwordField,
+  rememberMe: Yup.boolean(),
 })
 
 const registerSchema = Yup.object({
@@ -27,10 +30,22 @@ const registerSchema = Yup.object({
   confirmPassword: Yup.string()
     .required('Confirm your password')
     .oneOf([Yup.ref('password')], 'Passwords do not match'),
+  acceptTerms: Yup.boolean().oneOf([true], 'Please accept the Terms of Service and Privacy Policy'),
 })
 
 const forgotPasswordSchema = Yup.object({
   email: emailField,
 })
 
-export { loginSchema, registerSchema, forgotPasswordSchema }
+const resetPasswordSchema = Yup.object({
+  password: Yup.string()
+    .required('Password is required')
+    .min(8, 'Use at least 8 characters')
+    .matches(/[A-Za-z]/, 'Include at least one letter')
+    .matches(/[0-9]/, 'Include at least one number'),
+  confirmPassword: Yup.string()
+    .required('Confirm your password')
+    .oneOf([Yup.ref('password')], 'Passwords do not match'),
+})
+
+export { loginSchema, registerSchema, forgotPasswordSchema, resetPasswordSchema }
