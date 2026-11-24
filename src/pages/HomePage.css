@@ -187,3 +187,122 @@
 @media(max-width:760px){
   .collection-more{display:block}
 }
+
+
+/* Sidebar account controls and functional settings entry */
+.sidebar-account{display:flex;min-width:0;align-items:flex-start;gap:9px;border-bottom:1px solid var(--lv-line);padding:13px 12px 15px}
+.sidebar-account-avatar{width:32px;height:32px;flex:0 0 32px;display:grid;place-items:center;border:1px solid var(--lv-line);border-radius:9px;background:var(--lv-surface);color:var(--lv-secondary);font-size:12px;font-weight:700}
+.sidebar-account-avatar svg{width:15px;height:15px}
+.sidebar-account-copy{display:grid;min-width:0;flex:1;gap:3px}
+.sidebar-account-copy>strong{overflow:hidden;color:var(--lv-ink);font-size:11px;font-weight:650;text-overflow:ellipsis;white-space:nowrap}
+.sidebar-account-copy>span{overflow:hidden;color:var(--lv-muted);font-size:9px;text-overflow:ellipsis;white-space:nowrap}
+.account-action-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.account-action{display:inline-flex;min-height:25px;align-items:center;justify-content:center;gap:5px;border:1px solid var(--lv-line);border-radius:6px;padding:0 7px;background:var(--lv-surface);color:var(--lv-secondary);cursor:pointer;font:inherit;font-size:9px;font-weight:650}
+.account-action:hover{border-color:#b8c4d4;color:var(--lv-ink)}
+.account-action svg{width:11px;height:11px}
+.primary-account-action{border-color:#101b30;background:#101b30;color:white}
+.primary-account-action:hover{border-color:#26344d;background:#26344d;color:white}
+.signout-action{width:max-content;margin-top:5px;border:0;padding-left:0;background:transparent;color:var(--lv-danger)}
+.signout-action:hover{border-color:transparent;background:transparent;color:#a92c39}
+.sidebar-bottom{border-top:1px solid var(--lv-line);padding:10px 12px}
+.settings-nav-button{display:flex;width:100%;height:38px;align-items:center;gap:10px;border:1px solid transparent;border-radius:8px;padding:0 10px;background:transparent;color:var(--lv-secondary);cursor:pointer;font:inherit;font-size:12px;font-weight:600;text-align:left}
+.settings-nav-button:hover{border-color:var(--lv-line);background:var(--lv-surface);color:var(--lv-ink)}
+.settings-nav-button svg{width:16px;height:16px}
+.display-mode-control{display:inline-flex;height:36px;align-items:center;gap:2px;border:1px solid var(--lv-line);border-radius:8px;padding:3px;background:var(--lv-surface)}
+.display-mode-button{width:29px;height:28px;display:grid;place-items:center;border:0;border-radius:5px;background:transparent;color:var(--lv-muted);cursor:pointer}
+.display-mode-button:hover{color:var(--lv-ink)}
+.display-mode-button.is-active{background:var(--lv-canvas);color:var(--lv-ink);box-shadow:0 1px 2px rgb(15 23 42 / 8%)}
+.display-mode-button svg{width:15px;height:15px}
+.theme-toggle-button{height:36px;width:36px;flex-basis:36px;border:1px solid var(--lv-line);background:var(--lv-surface)}
+
+/* List layout */
+.bookmark-grid.is-list{display:flex;flex-direction:column;gap:9px}
+.bookmark-grid.is-list .bookmark-card{min-height:88px;flex-direction:row;align-items:center;gap:15px;padding:12px 15px}
+.bookmark-grid.is-list .bookmark-card-top{flex:0 0 auto;flex-direction:column;gap:3px}
+.bookmark-grid.is-list .bookmark-domain-icon{width:34px;height:34px;flex-basis:34px}
+.bookmark-grid.is-list .bookmark-domain-icon img{width:23px;height:23px}
+.bookmark-grid.is-list .bookmark-card-actions{gap:0}
+.bookmark-grid.is-list .bookmark-card-actions .icon-button{width:25px;height:25px;flex-basis:25px}
+.bookmark-grid.is-list .bookmark-card-copy{flex:1;margin:0}
+.bookmark-grid.is-list .bookmark-meta-line{font-size:9px}
+.bookmark-grid.is-list .bookmark-title{font-size:13px}
+.bookmark-grid.is-list .bookmark-description{min-height:0;margin-top:3px;-webkit-line-clamp:1}
+.bookmark-grid.is-list .bookmark-card-footer{min-width:145px;margin:0;padding:0}
+.bookmark-grid.is-list .collection-tag{max-width:130px}
+
+/* Dark theme */
+.app-shell[data-theme="dark"]{
+  --lv-canvas:#0b1220;
+  --lv-sidebar:#0e1728;
+  --lv-surface:#121e31;
+  --lv-ink:#edf3fb;
+  --lv-ink-soft:#d4deec;
+  --lv-secondary:#aab9cc;
+  --lv-muted:#8294ad;
+  --lv-line:#26364e;
+  --lv-line-soft:#1d2b40;
+  --lv-success:#65c69a;
+  --lv-danger:#f18c94;
+  --lv-shadow-card:0 1px 2px rgb(0 0 0 / 18%);
+  --lv-shadow-menu:0 14px 36px rgb(0 0 0 / 38%);
+}
+.app-shell[data-theme="dark"] .topbar{background:rgb(18 30 49 / 95%)}
+.app-shell[data-theme="dark"] .nav-item.is-active,
+.app-shell[data-theme="dark"] .bookmark-card,
+.app-shell[data-theme="dark"] .tools-button,
+.app-shell[data-theme="dark"] .tools-menu,
+.app-shell[data-theme="dark"] .card-menu,
+.app-shell[data-theme="dark"] .collection-menu,
+.app-shell[data-theme="dark"] .settings-choice,
+.app-shell[data-theme="dark"] .settings-panel,
+.app-shell[data-theme="dark"] .modal-panel,
+.app-shell[data-theme="dark"] .sidebar-account-avatar,
+.app-shell[data-theme="dark"] .bookmark-domain-icon,
+.app-shell[data-theme="dark"] .display-mode-control,
+.app-shell[data-theme="dark"] .theme-toggle-button{background:var(--lv-surface);color:var(--lv-ink)}
+.app-shell[data-theme="dark"] .nav-item:hover,
+.app-shell[data-theme="dark"] .collection-more summary:hover,
+.app-shell[data-theme="dark"] .card-menu button:hover,
+.app-shell[data-theme="dark"] .tools-menu>button:hover,
+.app-shell[data-theme="dark"] .settings-nav-button:hover{background:#1b2a40}
+.app-shell[data-theme="dark"] .nav-count,
+.app-shell[data-theme="dark"] .collection-tag,
+.app-shell[data-theme="dark"] .settings-choice-preview,
+.app-shell[data-theme="dark"] .storage-icon{background:#1b2a40;color:var(--lv-secondary)}
+.app-shell[data-theme="dark"] .search-box,
+.app-shell[data-theme="dark"] .sort-control,
+.app-shell[data-theme="dark"] .field input,
+.app-shell[data-theme="dark"] .field select,
+.app-shell[data-theme="dark"] .field textarea{background:#0e192b;color:var(--lv-ink)}
+.app-shell[data-theme="dark"] .modal-footer,
+.app-shell[data-theme="dark"] .settings-footer,
+.app-shell[data-theme="dark"] .settings-info-note{background:#0e192b}
+.app-shell[data-theme="dark"] .favorite-option:has(input:checked){background:#282517}
+.app-shell[data-theme="dark"] .empty-state{background:rgb(18 30 49 / 64%);border-color:#33445c}
+.app-shell[data-theme="dark"] .empty-state-icon,
+.app-shell[data-theme="dark"] .sidebar-footer-logo,
+.app-shell[data-theme="dark"] .settings-choice-preview{background:#17253a}
+.app-shell[data-theme="dark"] .settings-choice-preview.light-preview{background:#f8fafc;color:#50617b}
+.app-shell[data-theme="dark"] .settings-choice-preview.dark-preview{background:#101b30;color:#d8e3f1}
+.app-shell[data-theme="dark"] .account-action{background:var(--lv-surface);color:var(--lv-secondary)}
+.app-shell[data-theme="dark"] .primary-account-action{background:#e8eef8;color:#142036;border-color:#e8eef8}
+.app-shell[data-theme="dark"] .primary-account-action:hover{background:#cbd8ea}
+.app-shell[data-theme="dark"] .sidebar-account-avatar{background:#1b2a40}
+.app-shell[data-theme="dark"] .bookmark-domain-icon{background:#1a2940}
+.app-shell[data-theme="dark"] .button-secondary{background:var(--lv-surface);color:var(--lv-ink-soft)}
+.app-shell[data-theme="dark"] .content-footer{border-color:var(--lv-line)}
+@media(max-width:760px){
+  .sidebar-account{padding-top:11px;padding-bottom:12px}
+  .bookmark-grid.is-list .bookmark-card{align-items:flex-start;gap:10px}
+  .bookmark-grid.is-list .bookmark-card-footer{min-width:0;flex-direction:column;align-items:flex-end;justify-content:center}
+  .bookmark-grid.is-list .collection-tag{max-width:110px}
+  .topbar-actions{flex-wrap:nowrap}
+}
+@media(max-width:520px){
+  .display-mode-control{height:34px}
+  .display-mode-button{width:27px;height:26px}
+  .theme-toggle-button{height:34px;width:34px;flex-basis:34px}
+  .bookmark-grid.is-list .bookmark-card{min-height:100px;padding:10px}
+  .bookmark-grid.is-list .bookmark-card-top{max-width:44px}
+  .bookmark-grid.is-list .bookmark-card-footer{display:none}
+}
