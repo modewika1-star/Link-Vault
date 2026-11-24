@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
-import { FiCheck, FiX, FiSparkles } from 'react-icons/fi'
+import { FiCheck, FiX, FiZap } from 'react-icons/fi'
 import linkSchema from '../validation/linkSchema'
 
 const emptyValues = {
@@ -133,7 +133,7 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
                   aria-invalid={Boolean(urlError)}
                 />
                 <button className="preview-button" type="button" onClick={fetchPreview} disabled={previewLoading}>
-                  <FiSparkles />
+                  <FiZap />
                   {previewLoading ? 'Fetching...' : 'Fetch Preview'}
                 </button>
               </div>
