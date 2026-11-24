@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   FiExternalLink,
   FiMoreHorizontal,
@@ -14,6 +14,10 @@ export default function LinkCard({ link, collection, onFavorite, onEdit, onDelet
   const [menuOpen, setMenuOpen] = useState(false)
   const [faviconFailed, setFaviconFailed] = useState(false)
   const favicon = getFaviconUrl(link.url)
+
+  useEffect(() => {
+    setFaviconFailed(false)
+  }, [link.url])
 
   let hostname = link.url
   try {
