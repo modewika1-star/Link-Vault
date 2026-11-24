@@ -336,7 +336,7 @@
 .bookmark-description{min-height:36px;margin-top:6px;font-size:11px;line-height:1.55;-webkit-line-clamp:2}
 .bookmark-card-footer{min-height:48px;margin-top:auto;border-top:1px solid var(--lv-line-soft);padding:10px 14px}
 .collection-tag{max-width:calc(100% - 112px);gap:7px;border:1px solid #283a5a;border-radius:999px;padding:5px 9px;background:#14213a;color:#c4d3f2;font-size:10px;font-weight:650;letter-spacing:.05px}
-.collection-dot{width:7px;height:7px;flex-basis:7px;background:#a78bfa}
+.collection-dot{width:7px;height:7px;flex-basis:7px;background:var(--collection-color,#a78bfa)}
 .collection-tag.is-muted{border-color:var(--lv-line);background:var(--lv-canvas);color:var(--lv-muted)}
 .bookmark-card-actions{display:flex;align-items:center;gap:5px}
 .bookmark-action{width:28px;height:28px;display:grid;flex:0 0 28px;place-items:center;border:1px solid transparent;border-radius:7px;background:transparent;color:#8191a8;cursor:pointer;transition:background 130ms ease,color 130ms ease,border-color 130ms ease}
