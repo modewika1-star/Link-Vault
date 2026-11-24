@@ -15,12 +15,10 @@ const linkSchema = Yup.object({
       'Only HTTP and HTTPS links are supported',
       (value) => {
         if (!value) return false
-
         try {
           const parsedUrl = new URL(value)
           return (
-            (parsedUrl.protocol === 'http:' ||
-              parsedUrl.protocol === 'https:') &&
+            (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') &&
             Boolean(parsedUrl.hostname)
           )
         } catch {
@@ -28,6 +26,10 @@ const linkSchema = Yup.object({
         }
       },
     ),
+
+  notes: Yup.string().max(2000, 'Notes must be 2,000 characters or less'),
+  collectionId: Yup.string().nullable(),
+  favorite: Yup.boolean(),
 })
 
 export default linkSchema
