@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { FiFolderPlus, FiX } from 'react-icons/fi'
-import { useTranslation } from '../../../i18n/translations.js'
+import { useText } from '../../../lib/text.js'
 
 const colors = ['#647fe9', '#9b70db', '#e2a34b', '#2eaa87', '#e47787', '#4c9ab8']
 
 export default function CollectionModal({ open, onClose, onSave }) {
-  const { t } = useTranslation()
+  const { t } = useText()
   const [name, setName] = useState('')
   const [color, setColor] = useState(colors[0])
   const [error, setError] = useState('')

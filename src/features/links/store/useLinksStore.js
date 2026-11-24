@@ -114,29 +114,6 @@ function isSafeUrl(value) {
   }
 }
 
-function normalizeImportedLink(item, collectionId) {
-  if (!item || typeof item !== 'object') return null
-  const title = String(item.title || '').trim().slice(0, 80)
-  const url = String(item.url || '').trim()
-  if (!title || !isSafeUrl(url)) return null
-
-  return {
-    id: makeId(),
-    title,
-    url,
-    notes: typeof item.description === 'string' ? String(item.notes || '').trim().slice(0, 2000) : '',
-    description: String(item.description || item.notes || '').trim().slice(0, 500),
-    coverImageUrl: typeof item.coverImageUrl === 'string' && isSafeUrl(item.coverImageUrl) ? item.coverImageUrl : null,
-    thumbnail: typeof item.thumbnail === 'string' && item.thumbnail.startsWith('/assets/figma/')
-      ? item.thumbnail
-      : null,
-    collectionId,
-    favorite: Boolean(item.favorite),
-    createdAt: Number.isNaN(Date.parse(item.createdAt)) ? now() : item.createdAt,
-    updatedAt: now(),
-  }
-}
-
 function sanitizePersistedLink(item, allowedCollectionIds) {
   if (!item || typeof item !== 'object') return null
   const title = String(item.title || '').trim().slice(0, 80)
@@ -281,68 +258,6 @@ const useLinksStore = create(
         }))
       },
 
-      importBackup: (backup) => {
-        if (!backup || !Array.isArray(backup.links)) {
-          return { error: 'This file is not a valid Link Vault backup.' }
-        }
-
-        const currentCollections = get().collections
-        const incomingCollections = Array.isArray(backup.collections) ? backup.collections : []
-        const mergedCollections = [...currentCollections]
-        const collectionMap = new Map()
-
-        for (const item of incomingCollections) {
-          if (!item || typeof item.name !== 'string') continue
-          const existing = mergedCollections.find(
-            (collection) => normalizeName(collection.name) === normalizeName(item.name),
-          )
-          if (existing) {
-            collectionMap.set(item.id, existing.id)
-          } else {
-            const created = {
-              id: makeId(),
-              name: item.name.trim().slice(0, 32) || 'Imported collection',
-              color: /^#[0-9a-f]{6}$/i.test(item.color || '') ? item.color : '#647fe9',
-              createdAt: now(),
-            }
-            mergedCollections.push(created)
-            collectionMap.set(item.id, created.id)
-          }
-        }
-
-        const existingUrls = new Set(
-          get().links.map((link) => {
-            try { return new URL(link.url).href } catch { return link.url }
-          }),
-        )
-        const imported = backup.links
-          .map((item) => {
-            const collectionId = collectionMap.get(item?.collectionId) || null
-            return normalizeImportedLink(item, collectionId)
-          })
-          .filter(Boolean)
-          .filter((link) => {
-            const key = new URL(link.url).href
-            if (existingUrls.has(key)) return false
-            existingUrls.add(key)
-            return true
-          })
-
-        set((state) => ({
-          collections: mergedCollections,
-          links: [...imported, ...state.links],
-        }))
-
-        return { importedCount: imported.length }
-      },
-
-      exportBackup: () => ({
-        app: 'Link Vault',
-        version: 1,
-        exportedAt: now(),
-        collections: get().collections,
-        links: get().links,
-      }),
     }),
     {
       name: 'link-vault:links',

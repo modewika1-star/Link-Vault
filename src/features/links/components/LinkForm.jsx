@@ -1,13 +1,13 @@
 ﻿import { useFormik } from 'formik'
 import { FiPlus } from 'react-icons/fi'
 import linkSchema from '../validation/linkSchema'
-import { useTranslation } from '../../../i18n/translations.js'
+import { useText } from '../../../lib/text.js'
 
 const fieldClass =
   'w-full rounded-control border border-line bg-surface px-4 py-3 text-sm text-ink outline-none transition focus:border-brand'
 
 export default function LinkForm({ onAdd }) {
-  const { t } = useTranslation()
+  const { t } = useText()
   const formik = useFormik({
     initialValues: {
       title: '',

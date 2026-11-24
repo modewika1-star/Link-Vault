@@ -32,7 +32,7 @@ import usePreferencesStore from '../features/settings/store/usePreferencesStore.
 import SettingsModal from '../features/settings/components/SettingsModal.jsx'
 import FigmaIcon from '../components/FigmaIcon.jsx'
 import { filterAndSortLinks, getCollectionCount } from '../features/links/utils/linkUtils.js'
-import { useTranslation } from '../i18n/translations.js'
+import { useText } from '../lib/text.js'
 import './HomePage.css'
 
 const sortOptions = [
@@ -44,7 +44,7 @@ const sortOptions = [
 
 export default function HomePage() {
   const navigate = useNavigate()
-  const { language, t, toggleLanguage } = useTranslation()
+  const { t } = useText()
   const user = useDemoAuthStore((state) => state.user)
   const theme = usePreferencesStore((state) => state.theme)
   const toggleTheme = usePreferencesStore((state) => state.toggleTheme)
@@ -192,12 +192,10 @@ export default function HomePage() {
     notify(t('Collection links updated.'))
   }
 
-  const formattedCount = new Intl.NumberFormat(language === 'ar' ? 'ar' : 'en').format(visibleLinks.length)
-  const headingCount = language === 'ar'
-    ? query ? `${formattedCount} نتيجة` : `${formattedCount} رابط محفوظ`
-    : query
-      ? `${formattedCount} result${visibleLinks.length === 1 ? '' : 's'}`
-      : `${formattedCount} bookmark${visibleLinks.length === 1 ? '' : 's'}`
+  const formattedCount = new Intl.NumberFormat('en').format(visibleLinks.length)
+  const headingCount = query
+    ? `${formattedCount} result${visibleLinks.length === 1 ? '' : 's'}`
+    : `${formattedCount} bookmark${visibleLinks.length === 1 ? '' : 's'}`
 
   const openAllLinks = () => {
     visibleLinks.forEach((link) => window.open(link.url, '_blank', 'noopener,noreferrer'))
@@ -347,16 +345,6 @@ export default function HomePage() {
 
             <button className="icon-button theme-toggle-button" type="button" onClick={toggleTheme} aria-label={t(theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme')} title={t(theme === 'dark' ? 'Light theme' : 'Dark theme')}>
               {theme === 'dark' ? <FiSun /> : <FiMoon />}
-            </button>
-
-            <button
-              className="icon-button theme-toggle-button language-toggle-button"
-              type="button"
-              onClick={toggleLanguage}
-              aria-label={t(language === 'ar' ? 'Switch language to English' : 'Switch language to Arabic')}
-              title={t(language === 'ar' ? 'Switch language to English' : 'Switch language to Arabic')}
-            >
-              {language === 'ar' ? 'E' : 'ع'}
             </button>
 
             <button className="button button-primary add-bookmark-button" type="button" onClick={openNewLink}>

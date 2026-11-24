@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import { FiCheck, FiX } from 'react-icons/fi'
 import linkSchema from '../validation/linkSchema'
-import { useTranslation } from '../../../i18n/translations.js'
+import { useText } from '../../../lib/text.js'
 
 const emptyValues = {
   title: '',
@@ -15,7 +15,7 @@ const emptyValues = {
 }
 
 export default function LinkModal({ open, link, collections, onClose, onSave }) {
-  const { t } = useTranslation()
+  const { t } = useText()
   const [previewLoading, setPreviewLoading] = useState(false)
   const formik = useFormik({
     initialValues: link

@@ -5,7 +5,7 @@ import {
   FiArrowLeft, FiLayers, FiSearch, FiLink2, FiSave,
 } from 'react-icons/fi'
 import './SettingsModal.css'
-import { useTranslation } from '../../../i18n/translations.js'
+import { useText } from '../../../lib/text.js'
 
 export default function SettingsModal({
   open,
@@ -24,7 +24,7 @@ export default function SettingsModal({
   onCreateCollection,
   onSetCollectionLinks,
 }) {
-  const { t } = useTranslation()
+  const { t } = useText()
   const [section, setSection] = useState('home')
   const [search, setSearch] = useState('')
   const [selectedLinks, setSelectedLinks] = useState([])

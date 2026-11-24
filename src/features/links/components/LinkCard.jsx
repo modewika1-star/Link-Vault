@@ -7,10 +7,10 @@ import {
   FiGlobe,
   FiBookmark,
 } from 'react-icons/fi'
-import { useTranslation } from '../../../i18n/translations.js'
+import { useText } from '../../../lib/text.js'
 
 export default function LinkCard({ link, collection, onFavorite, onEdit, onDelete }) {
-  const { t } = useTranslation()
+  const { t } = useText()
   const [imageFailed, setImageFailed] = useState(false)
   const imageUrl = link.coverImageUrl || link.thumbnail || ''
   const description = link.description || link.notes || ''
