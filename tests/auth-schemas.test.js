@@ -4,6 +4,7 @@ import {
   loginSchema,
   registerSchema,
   forgotPasswordSchema,
+  resetPasswordSchema,
 } from '../src/features/auth/validation/authSchemas.js'
 
 test('login accepts a valid email and a password with minimum length', async () => {
@@ -26,16 +27,26 @@ test('registration requires a valid name, email, strong password and matching co
     email: 'mody@example.com',
     password: 'DemoPass123',
     confirmPassword: 'DemoPass123',
+    acceptTerms: true,
   }))
   await assert.rejects(() => registerSchema.validate({
     fullName: 'M',
     email: 'not-an-email',
     password: '12345678',
     confirmPassword: '12345678x',
+    acceptTerms: true,
+  }))
+  await assert.rejects(() => registerSchema.validate({
+    fullName: 'Mohamed Ali', email: 'mody@example.com', password: 'DemoPass123', confirmPassword: 'DemoPass123', acceptTerms: false,
   }))
 })
 
 test('forgot password accepts only a valid email shape', async () => {
   await assert.doesNotReject(() => forgotPasswordSchema.validate({ email: 'user@example.com' }))
   await assert.rejects(() => forgotPasswordSchema.validate({ email: 'bad-email' }))
+})
+
+test('reset password requires a strong password and matching confirmation', async () => {
+  await assert.doesNotReject(() => resetPasswordSchema.validate({ password: 'NewPass123', confirmPassword: 'NewPass123' }))
+  await assert.rejects(() => resetPasswordSchema.validate({ password: 'weak', confirmPassword: 'weak' }))
 })
