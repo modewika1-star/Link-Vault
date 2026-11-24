@@ -1,4 +1,4 @@
-﻿import * as Yup from 'yup'
+import * as Yup from 'yup'
 
 const linkSchema = Yup.object({
   title: Yup.string()
@@ -8,8 +8,26 @@ const linkSchema = Yup.object({
 
   url: Yup.string()
     .trim()
+    .required('Please enter a URL')
     .url('Please enter a valid URL')
-    .required('Please enter a URL'),
+    .test(
+      'http-or-https',
+      'Only HTTP and HTTPS links are supported',
+      (value) => {
+        if (!value) return false
+
+        try {
+          const parsedUrl = new URL(value)
+          return (
+            (parsedUrl.protocol === 'http:' ||
+              parsedUrl.protocol === 'https:') &&
+            Boolean(parsedUrl.hostname)
+          )
+        } catch {
+          return false
+        }
+      },
+    ),
 })
 
 export default linkSchema
