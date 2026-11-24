@@ -97,12 +97,6 @@ export default function HomePage() {
     : view === 'collection'
       ? activeCollection?.name || 'Collection'
       : 'All Bookmarks'
-  const pageDescription = view === 'favorites'
-    ? 'The bookmarks you have saved for quick access.'
-    : view === 'collection'
-      ? 'Everything saved in this collection, in one place.'
-      : 'A quiet place for everything worth keeping.'
-
   useEffect(() => () => {
     if (toastTimer.current) window.clearTimeout(toastTimer.current)
   }, [])
