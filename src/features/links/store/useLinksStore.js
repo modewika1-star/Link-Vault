@@ -12,7 +12,8 @@ const demoLinks = [
     id: 'demo-react',
     title: 'React',
     url: 'https://react.dev/',
-    notes: 'The library for web and native user interfaces.',
+    description: 'React lets you build user interfaces out of individual pieces called components.',
+    notes: '',
     thumbnail: '/assets/figma/react-reference.png',
     collectionId: 'col-frontend',
     favorite: true,
@@ -24,7 +25,8 @@ const demoLinks = [
     id: 'demo-tailwind',
     title: 'Tailwind CSS',
     url: 'https://tailwindcss.com/',
-    notes: 'Rapidly build modern websites without ever leaving your HTML.',
+    description: 'A utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90.',
+    notes: '',
     thumbnail: '/assets/figma/tailwind-reference.png',
     collectionId: 'col-frontend',
     favorite: true,
@@ -36,7 +38,8 @@ const demoLinks = [
     id: 'demo-vite',
     title: 'Vite',
     url: 'https://vite.dev/',
-    notes: 'Next generation frontend tooling. Fast development server and optimized production builds.',
+    description: 'Instant server start, lightning fast HMR, and rich features for modern web projects.',
+    notes: '',
     collectionId: 'col-frontend',
     favorite: false,
     createdAt: '2026-11-18T10:00:00.000Z',
@@ -44,10 +47,11 @@ const demoLinks = [
     isSample: true,
   },
   {
-    id: 'demo-mdn',
-    title: 'MDN Web Docs',
-    url: 'https://developer.mozilla.org/',
-    notes: 'Documentation and learning resources for HTML, CSS, JavaScript, and the open web.',
+    id: 'demo-lucide',
+    title: 'Lucide Icons',
+    url: 'https://lucide.dev/',
+    description: 'Beautiful & consistent icon toolkit made by the community. Open-source and lightweight.',
+    notes: '',
     collectionId: 'col-frontend',
     favorite: false,
     createdAt: '2026-11-17T10:00:00.000Z',
@@ -58,7 +62,8 @@ const demoLinks = [
     id: 'demo-huggingface',
     title: 'Hugging Face',
     url: 'https://huggingface.co/',
-    notes: 'Explore machine learning models, datasets, and applications.',
+    description: 'Discover, download, and test thousands of open-source machine learning models and datasets.',
+    notes: '',
     thumbnail: '/assets/figma/huggingface-logo.svg',
     collectionId: 'col-ai',
     favorite: true,
@@ -70,7 +75,8 @@ const demoLinks = [
     id: 'demo-openai',
     title: 'OpenAI Platform',
     url: 'https://platform.openai.com/docs/',
-    notes: 'API documentation and developer resources for building with OpenAI.',
+    description: 'Explore developer resources, tutorials, API docs, and dynamic examples to get the most out of OpenAI.',
+    notes: '',
     collectionId: 'col-ai',
     favorite: false,
     createdAt: '2026-11-21T10:00:00.000Z',
@@ -79,9 +85,10 @@ const demoLinks = [
   },
   {
     id: 'demo-reading',
-    title: 'A Complete Guide to Flexbox',
-    url: 'https://css-tricks.com/snippets/css/a-guide-to-flexbox/',
-    notes: 'A handy visual reference for understanding CSS Flexbox layouts.',
+    title: 'Patterns of Distributed Systems',
+    url: 'https://martinfowler.com/articles/patterns-of-distributed-systems/',
+    description: 'A catalog of common architectural patterns for building reliable distributed systems.',
+    notes: '',
     collectionId: 'col-reading',
     favorite: false,
     createdAt: '2026-11-16T10:00:00.000Z',
@@ -339,7 +346,7 @@ const useLinksStore = create(
     }),
     {
       name: 'link-vault:links',
-      version: 4,
+      version: 5,
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         links: state.links,
@@ -357,8 +364,32 @@ const useLinksStore = create(
             : demoLinks
         const allowedCollectionIds = new Set(collections.map((item) => item.id))
 
+        const alignedSamples = sourceLinks.map((item) => {
+          if (!item?.isSample) return item
+          if (item.id === 'demo-mdn' && item.title === 'MDN Web Docs') {
+            return {
+              ...item,
+              id: 'demo-lucide',
+              title: 'Lucide Icons',
+              url: 'https://lucide.dev/',
+              description: 'Beautiful & consistent icon toolkit made by the community. Open-source and lightweight.',
+              notes: '',
+            }
+          }
+          if (item.id === 'demo-reading' && item.title === 'A Complete Guide to Flexbox') {
+            return {
+              ...item,
+              title: 'Patterns of Distributed Systems',
+              url: 'https://martinfowler.com/articles/patterns-of-distributed-systems/',
+              description: 'A catalog of common architectural patterns for building reliable distributed systems.',
+              notes: '',
+            }
+          }
+          return item
+        })
+
         return {
-          links: sourceLinks
+          links: alignedSamples
             .map((item) => sanitizePersistedLink(item, allowedCollectionIds))
             .filter(Boolean),
           collections,
