@@ -22,7 +22,7 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
           url: link.url || '',
           description: link.description || link.notes || '',
           coverImageUrl: link.coverImageUrl || '',
-          notes: link.notes || '',
+          notes: link.description ? link.notes || '' : '',
           collectionId: link.collectionId || '',
           favorite: Boolean(link.favorite),
         }
