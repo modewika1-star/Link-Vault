@@ -374,3 +374,18 @@
 @media(max-width:999px){.bookmark-card{min-height:356px}.bookmark-card-image{height:136px;min-height:136px}}
 @media(max-width:760px){.bookmark-grid{grid-template-columns:1fr}.bookmark-card{min-height:320px}.bookmark-card-image{height:150px;min-height:150px}}
 @media(max-width:520px){.bookmark-card{min-height:0}.link-modal-body{padding:15px}.link-modal-header{padding:15px}.link-modal-panel .modal-footer{padding:12px 15px}.url-preview-row{flex-direction:column}.preview-button{min-height:38px}}
+
+.page-heading-row{align-items:flex-start;margin-bottom:22px}
+.page-heading-copy h1{margin:0;color:var(--lv-ink);font-size:clamp(23px,2vw,27px);font-weight:700;letter-spacing:-.75px;line-height:1.25}
+.page-heading-copy p{margin:4px 0 0;color:var(--lv-muted);font-size:11px;line-height:1.5}
+.open-all-button{display:inline-flex;min-height:34px;align-items:center;justify-content:center;gap:7px;border:1px solid var(--lv-line);border-radius:8px;padding:0 11px;background:var(--lv-surface);color:var(--lv-secondary);cursor:pointer;font:inherit;font-size:10px;font-weight:600;white-space:nowrap}
+.open-all-button:hover:not(:disabled){border-color:#c1cddd;background:var(--lv-canvas);color:var(--lv-ink)}
+.open-all-button:disabled{opacity:.45;cursor:not-allowed}
+.open-all-button svg{width:13px;height:13px}
+.bookmark-grid.is-list .bookmark-card{min-height:124px;flex-direction:row;align-items:stretch}
+.bookmark-grid.is-list .bookmark-card-image{display:none}
+.bookmark-grid.is-list .bookmark-card-copy{flex:1;padding:15px 14px}
+.bookmark-grid.is-list .bookmark-card-footer{min-width:190px;flex-direction:column;align-items:flex-end;justify-content:center;border-top:0;padding:12px 14px}
+.bookmark-grid.is-list .collection-tag{max-width:150px}
+@media(max-width:760px){.page-heading-row{align-items:center}.page-heading-copy h1{font-size:22px}.open-all-button{min-height:32px;padding:0 9px}}
+@media(max-width:520px){.bookmark-grid.is-list .bookmark-card{min-height:120px;flex-direction:row}.bookmark-grid.is-list .bookmark-card-copy{padding:10px 8px}.bookmark-grid.is-list .bookmark-card-footer{min-width:106px;padding:8px}.bookmark-grid.is-list .bookmark-card-actions{gap:0}.bookmark-grid.is-list .bookmark-action{width:24px;height:26px;flex-basis:24px}}
