@@ -134,12 +134,22 @@ function sanitizePersistedLink(item, allowedCollectionIds) {
   const url = String(item.url || '').trim()
   if (!title || !isSafeUrl(url)) return null
 
+  const sampleThumbnails = {
+    'demo-react': '/assets/figma/react-reference.png',
+    'demo-tailwind': '/assets/figma/tailwind-reference.png',
+    'demo-huggingface': '/assets/figma/huggingface-logo.svg',
+  }
+  const thumbnail = typeof item.thumbnail === 'string' && item.thumbnail.startsWith('/assets/figma/')
+    ? item.thumbnail
+    : sampleThumbnails[item.id] || null
+
   return {
     ...item,
     id: typeof item.id === 'string' && item.id ? item.id : makeId(),
     title,
     url,
     notes: String(item.notes || '').trim().slice(0, 2000),
+    thumbnail,
     collectionId: allowedCollectionIds.has(item.collectionId) ? item.collectionId : null,
     favorite: Boolean(item.favorite),
     createdAt: Number.isNaN(Date.parse(item.createdAt)) ? now() : item.createdAt,
@@ -295,7 +305,7 @@ const useLinksStore = create(
     }),
     {
       name: 'link-vault:links',
-      version: 2,
+      version: 3,
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         links: state.links,
