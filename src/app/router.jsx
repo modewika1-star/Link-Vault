@@ -12,6 +12,8 @@ export default function AppRouter() {
         <Route path="/login" element={<AuthPage mode="login" />} />
         <Route path="/register" element={<AuthPage mode="register" />} />
         <Route path="/forgot-password" element={<AuthPage mode="forgot-password" />} />
+        <Route path="/verify-code" element={<AuthPage mode="verify-code" />} />
+        <Route path="/reset-password" element={<AuthPage mode="reset-password" />} />
         <Route path="/logout" element={<LogoutPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
