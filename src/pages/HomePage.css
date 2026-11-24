@@ -320,3 +320,57 @@
 .bookmark-grid.is-list .bookmark-card-image{display:none}
 .app-shell[data-theme="dark"] .bookmark-card-image{background:#0e192b}
 @media(max-width:760px){.bookmark-card-image{height:100px}}
+
+/* Figma-fidelity pass: bookmark cards, collection chips and editor */
+@media(min-width:1000px){.bookmark-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
+.bookmark-card{min-height:372px;overflow:hidden;padding:0;border-radius:11px}
+.bookmark-card-image{height:150px;min-height:150px;border:0;border-radius:0;background:#eef2f8;display:grid;place-items:center}
+.bookmark-card-image img{width:100%;height:100%;object-fit:cover;object-position:center}
+.bookmark-image-placeholder{width:44px;height:44px;display:grid;place-items:center;border-radius:10px;background:#e2e8f0;color:#73849d}
+.bookmark-image-placeholder svg{width:21px;height:21px;stroke-width:1.5}
+.bookmark-card-copy{margin:0;padding:14px 15px 0}
+.bookmark-meta-line{min-height:20px;gap:8px;font-size:10px}
+.bookmark-domain{display:inline-flex;min-width:0;align-items:center;gap:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bookmark-domain svg{width:13px;height:13px;flex:0 0 13px}
+.bookmark-title{margin-top:5px;font-size:13px;line-height:1.45}
+.bookmark-description{min-height:36px;margin-top:6px;font-size:11px;line-height:1.55;-webkit-line-clamp:2}
+.bookmark-card-footer{min-height:48px;margin-top:auto;border-top:1px solid var(--lv-line-soft);padding:10px 14px}
+.collection-tag{max-width:calc(100% - 112px);gap:7px;border:1px solid #283a5a;border-radius:999px;padding:5px 9px;background:#14213a;color:#c4d3f2;font-size:10px;font-weight:650;letter-spacing:.05px}
+.collection-dot{width:7px;height:7px;flex-basis:7px;background:#a78bfa}
+.collection-tag.is-muted{border-color:var(--lv-line);background:var(--lv-canvas);color:var(--lv-muted)}
+.bookmark-card-actions{display:flex;align-items:center;gap:5px}
+.bookmark-action{width:28px;height:28px;display:grid;flex:0 0 28px;place-items:center;border:1px solid transparent;border-radius:7px;background:transparent;color:#8191a8;cursor:pointer;transition:background 130ms ease,color 130ms ease,border-color 130ms ease}
+.bookmark-action svg{width:15px;height:15px;stroke-width:1.8}
+.bookmark-action:hover{border-color:var(--lv-line);background:var(--lv-canvas);color:var(--lv-ink)}
+.bookmark-action.favorite-active{background:#fff8e9;color:#d99a2d}
+.bookmark-action.favorite-active svg{fill:rgb(217 154 45 / 14%)}
+.bookmark-action.delete-action{color:#d14a50}
+.bookmark-action.delete-action:hover{border-color:#f1c7c9;background:#fff1f1;color:#b72f37}
+.link-modal-panel{width:min(100%,564px);max-height:min(92vh,900px);overflow:auto;border-radius:15px}
+.link-modal-header{min-height:61px;justify-content:space-between;padding:17px 22px}
+.link-modal-header h2{margin:0;color:#172033;font-size:16px;font-weight:650;letter-spacing:-.2px}
+.link-modal-body{gap:14px;padding:18px 22px 20px}
+.link-modal-body .field{gap:7px;color:#27364d;font-size:11px;font-weight:600}
+.link-modal-body .field input,.link-modal-body .field select,.link-modal-body .field textarea{min-height:41px;border-color:#dbe3ee;border-radius:8px;padding:9px 12px;background:#fff;color:#152238;font-size:12px}
+.link-modal-body .field textarea{min-height:60px;resize:vertical}
+.link-modal-body .field input::placeholder,.link-modal-body .field textarea::placeholder{color:#8ea0b9}
+.url-preview-row{display:flex;align-items:stretch;gap:8px}
+.url-preview-row>input{min-width:0;flex:1}
+.preview-button{display:inline-flex;min-width:122px;align-items:center;justify-content:center;gap:6px;border:1px solid #dbe3ee;border-radius:8px;padding:0 10px;background:#f8fafc;color:#40516d;cursor:pointer;font:inherit;font-size:10px;font-weight:600;white-space:nowrap}
+.preview-button:hover:not(:disabled){border-color:#b9c6d9;background:#f1f5f9}
+.preview-button:disabled{opacity:.65;cursor:wait}
+.preview-button svg{width:13px;height:13px;color:#d99a2d}
+.preview-status{color:#64748b;font-size:10px;line-height:1.45}
+.link-modal-panel .modal-footer{padding:13px 22px;background:#fbfcfe}
+.link-modal-panel .modal-footer .button{min-height:38px;padding:0 15px;font-size:11px}
+.link-modal-panel .button-primary{background:#101a2e;border-color:#101a2e}
+.link-modal-panel .button-secondary{background:#fff}
+.app-shell[data-theme="dark"] .bookmark-card{background:#111c2f}
+.app-shell[data-theme="dark"] .bookmark-card-image{background:#f1f5f9}
+.app-shell[data-theme="dark"] .bookmark-image-placeholder{background:#e2e8f0;color:#72839b}
+.app-shell[data-theme="dark"] .collection-tag{border-color:#2b3d5e;background:#14213a;color:#c4d3f2}
+.app-shell[data-theme="dark"] .collection-tag.is-muted{border-color:var(--lv-line);background:var(--lv-canvas);color:var(--lv-muted)}
+.app-shell[data-theme="dark"] .bookmark-action:hover{background:#1a2941}
+@media(max-width:999px){.bookmark-card{min-height:356px}.bookmark-card-image{height:136px;min-height:136px}}
+@media(max-width:760px){.bookmark-grid{grid-template-columns:1fr}.bookmark-card{min-height:320px}.bookmark-card-image{height:150px;min-height:150px}}
+@media(max-width:520px){.bookmark-card{min-height:0}.link-modal-body{padding:15px}.link-modal-header{padding:15px}.link-modal-panel .modal-footer{padding:12px 15px}.url-preview-row{flex-direction:column}.preview-button{min-height:38px}}
