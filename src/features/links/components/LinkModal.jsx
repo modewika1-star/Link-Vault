@@ -134,21 +134,41 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
                 />
                 <button className="preview-button" type="button" onClick={fetchPreview} disabled={previewLoading}>
                   <svg
-                    width="13.99"
-                    height="13.99"
+                    width="14"
+                    height="14"
                     viewBox="0 0 14 14"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                     aria-hidden="true"
                     focusable="false"
                   >
-                    <circle cx="7" cy="7" r="5.83" stroke="#FE9A00" strokeWidth="1.16583" />
                     <path
-                      d="M11.67 1.17V3.5M10.5 2.33H12.83M1.17 10.5H3.5V12.83"
-                      stroke="#FE9A00"
+                      d="M6.42211 1.64033C6.47364 1.36444 6.71445 1.16444 6.99511 1.16444C7.27577 1.16444 7.51659 1.36444 7.56812 1.64033L8.18077 4.88018C8.26981 5.35158 8.63854 5.7203 9.10993 5.80935L12.3498 6.422C12.6257 6.47353 12.8257 6.71435 12.8257 6.99501C12.8257 7.27567 12.6257 7.51648 12.3498 7.56801L9.10993 8.18066C8.63854 8.26971 8.26981 8.63843 8.18077 9.10983L7.56812 12.3497C7.51659 12.6256 7.27577 12.8256 6.99511 12.8256C6.71445 12.8256 6.47364 12.6256 6.42211 12.3497L5.80946 9.10983C5.72041 8.63843 5.35169 8.26971 4.88029 8.18066L1.64044 7.56801C1.36455 7.51648 1.16455 7.27567 1.16455 6.99501C1.16455 6.71435 1.36455 6.47353 1.64044 6.422L4.88029 5.80935C5.35169 5.7203 5.72041 5.35158 5.80946 4.88018L6.42211 1.64033"
                       strokeWidth="1.16583"
                       strokeLinecap="round"
                       strokeLinejoin="round"
+                      stroke="#FE9A00"
+                    />
+                    <path
+                      d="M11.6582 1.16583V3.4975"
+                      strokeWidth="1.16583"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      stroke="#FE9A00"
+                    />
+                    <path
+                      d="M12.8243 2.33167H10.4927"
+                      strokeWidth="1.16583"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      stroke="#FE9A00"
+                    />
+                    <path
+                      d="M1.16602 11.6583C1.16602 12.3018 1.68841 12.8242 2.33185 12.8242C2.97529 12.8242 3.49768 12.3018 3.49768 11.6583C3.49768 11.0149 2.97529 10.4925 2.33185 10.4925C1.68841 10.4925 1.16602 11.0149 1.16602 11.6583H1.16602"
+                      strokeWidth="1.16583"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      stroke="#FE9A00"
                     />
                   </svg>
                   {previewLoading ? 'Fetching...' : 'Fetch Preview'}
