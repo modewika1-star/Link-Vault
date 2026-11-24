@@ -10,40 +10,40 @@ const defaultCollections = [
 const demoLinks = [
   {
     id: 'demo-react',
-    title: 'React',
+    title: 'React – The Library for Web and Native User Interfaces',
     url: 'https://react.dev/',
     description: 'React lets you build user interfaces out of individual pieces called components.',
     notes: '',
     thumbnail: '/assets/figma/react-reference.png',
     collectionId: 'col-frontend',
     favorite: true,
-    createdAt: '2026-11-20T10:00:00.000Z',
-    updatedAt: '2026-11-20T10:00:00.000Z',
+    createdAt: '2026-11-24T10:00:00.000Z',
+    updatedAt: '2026-11-24T10:00:00.000Z',
     isSample: true,
   },
   {
     id: 'demo-tailwind',
-    title: 'Tailwind CSS',
+    title: 'Tailwind CSS - Rapidly build modern websites without ever leaving your HTML',
     url: 'https://tailwindcss.com/',
     description: 'A utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90.',
     notes: '',
     thumbnail: '/assets/figma/tailwind-reference.png',
     collectionId: 'col-frontend',
     favorite: true,
-    createdAt: '2026-11-19T10:00:00.000Z',
-    updatedAt: '2026-11-19T10:00:00.000Z',
+    createdAt: '2026-11-23T10:00:00.000Z',
+    updatedAt: '2026-11-23T10:00:00.000Z',
     isSample: true,
   },
   {
     id: 'demo-vite',
-    title: 'Vite',
+    title: 'Vite | Next Generation Frontend Tooling',
     url: 'https://vite.dev/',
     description: 'Instant server start, lightning fast HMR, and rich features for modern web projects.',
     notes: '',
     collectionId: 'col-frontend',
     favorite: false,
-    createdAt: '2026-11-18T10:00:00.000Z',
-    updatedAt: '2026-11-18T10:00:00.000Z',
+    createdAt: '2026-11-22T10:00:00.000Z',
+    updatedAt: '2026-11-22T10:00:00.000Z',
     isSample: true,
   },
   {
@@ -54,33 +54,33 @@ const demoLinks = [
     notes: '',
     collectionId: 'col-frontend',
     favorite: false,
-    createdAt: '2026-11-17T10:00:00.000Z',
-    updatedAt: '2026-11-17T10:00:00.000Z',
+    createdAt: '2026-11-21T10:00:00.000Z',
+    updatedAt: '2026-11-21T10:00:00.000Z',
     isSample: true,
   },
   {
     id: 'demo-huggingface',
-    title: 'Hugging Face',
+    title: 'Hugging Face – Models',
     url: 'https://huggingface.co/',
     description: 'Discover, download, and test thousands of open-source machine learning models and datasets.',
     notes: '',
     thumbnail: '/assets/figma/huggingface-logo.svg',
     collectionId: 'col-ai',
     favorite: true,
-    createdAt: '2026-11-22T10:00:00.000Z',
-    updatedAt: '2026-11-22T10:00:00.000Z',
+    createdAt: '2026-11-19T10:00:00.000Z',
+    updatedAt: '2026-11-19T10:00:00.000Z',
     isSample: true,
   },
   {
     id: 'demo-openai',
-    title: 'OpenAI Platform',
+    title: 'OpenAI Platform Documentation',
     url: 'https://platform.openai.com/docs/',
     description: 'Explore developer resources, tutorials, API docs, and dynamic examples to get the most out of OpenAI.',
     notes: '',
     collectionId: 'col-ai',
     favorite: false,
-    createdAt: '2026-11-21T10:00:00.000Z',
-    updatedAt: '2026-11-21T10:00:00.000Z',
+    createdAt: '2026-11-20T10:00:00.000Z',
+    updatedAt: '2026-11-20T10:00:00.000Z',
     isSample: true,
   },
   {
@@ -91,8 +91,8 @@ const demoLinks = [
     notes: '',
     collectionId: 'col-reading',
     favorite: false,
-    createdAt: '2026-11-16T10:00:00.000Z',
-    updatedAt: '2026-11-16T10:00:00.000Z',
+    createdAt: '2026-11-18T10:00:00.000Z',
+    updatedAt: '2026-11-18T10:00:00.000Z',
     isSample: true,
   },
 ]
@@ -346,7 +346,7 @@ const useLinksStore = create(
     }),
     {
       name: 'link-vault:links',
-      version: 5,
+      version: 6,
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         links: state.links,
@@ -364,28 +364,65 @@ const useLinksStore = create(
             : demoLinks
         const allowedCollectionIds = new Set(collections.map((item) => item.id))
 
+        const sampleMetadata = {
+          'demo-react': {
+            oldTitle: 'React',
+            title: 'React – The Library for Web and Native User Interfaces',
+            description: 'React lets you build user interfaces out of individual pieces called components.',
+            createdAt: '2026-11-24T10:00:00.000Z',
+          },
+          'demo-tailwind': {
+            oldTitle: 'Tailwind CSS',
+            title: 'Tailwind CSS - Rapidly build modern websites without ever leaving your HTML',
+            description: 'A utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90.',
+            createdAt: '2026-11-23T10:00:00.000Z',
+          },
+          'demo-vite': {
+            oldTitle: 'Vite',
+            title: 'Vite | Next Generation Frontend Tooling',
+            description: 'Instant server start, lightning fast HMR, and rich features for modern web projects.',
+            createdAt: '2026-11-22T10:00:00.000Z',
+          },
+          'demo-lucide': {
+            oldTitle: 'Lucide Icons',
+            title: 'Lucide Icons',
+            description: 'Beautiful & consistent icon toolkit made by the community. Open-source and lightweight.',
+            createdAt: '2026-11-21T10:00:00.000Z',
+          },
+          'demo-openai': {
+            oldTitle: 'OpenAI Platform',
+            title: 'OpenAI Platform Documentation',
+            description: 'Explore developer resources, tutorials, API docs, and dynamic examples to get the most out of OpenAI.',
+            createdAt: '2026-11-20T10:00:00.000Z',
+          },
+          'demo-huggingface': {
+            oldTitle: 'Hugging Face',
+            title: 'Hugging Face – Models',
+            description: 'Discover, download, and test thousands of open-source machine learning models and datasets.',
+            createdAt: '2026-11-19T10:00:00.000Z',
+          },
+          'demo-reading': {
+            oldTitle: 'A Complete Guide to Flexbox',
+            title: 'Patterns of Distributed Systems',
+            description: 'A catalog of common architectural patterns for building reliable distributed systems.',
+            createdAt: '2026-11-18T10:00:00.000Z',
+          },
+        }
+
         const alignedSamples = sourceLinks.map((item) => {
           if (!item?.isSample) return item
-          if (item.id === 'demo-mdn' && item.title === 'MDN Web Docs') {
-            return {
-              ...item,
-              id: 'demo-lucide',
-              title: 'Lucide Icons',
-              url: 'https://lucide.dev/',
-              description: 'Beautiful & consistent icon toolkit made by the community. Open-source and lightweight.',
-              notes: '',
-            }
+          const id = item.id === 'demo-mdn' && item.title === 'MDN Web Docs' ? 'demo-lucide' : item.id
+          const metadata = sampleMetadata[id]
+          if (!metadata || ![metadata.oldTitle, metadata.title].includes(item.title)) return item
+          return {
+            ...item,
+            id,
+            title: metadata.title,
+            description: metadata.description,
+            notes: '',
+            createdAt: metadata.createdAt,
+            updatedAt: metadata.createdAt,
           }
-          if (item.id === 'demo-reading' && item.title === 'A Complete Guide to Flexbox') {
-            return {
-              ...item,
-              title: 'Patterns of Distributed Systems',
-              url: 'https://martinfowler.com/articles/patterns-of-distributed-systems/',
-              description: 'A catalog of common architectural patterns for building reliable distributed systems.',
-              notes: '',
-            }
-          }
-          return item
         })
 
         return {
