@@ -122,6 +122,25 @@ function normalizeImportedLink(item, collectionId) {
   }
 }
 
+function sanitizePersistedLink(item, allowedCollectionIds) {
+  if (!item || typeof item !== 'object') return null
+  const title = String(item.title || '').trim().slice(0, 80)
+  const url = String(item.url || '').trim()
+  if (!title || !isSafeUrl(url)) return null
+
+  return {
+    ...item,
+    id: typeof item.id === 'string' && item.id ? item.id : makeId(),
+    title,
+    url,
+    notes: String(item.notes || '').trim().slice(0, 2000),
+    collectionId: allowedCollectionIds.has(item.collectionId) ? item.collectionId : null,
+    favorite: Boolean(item.favorite),
+    createdAt: Number.isNaN(Date.parse(item.createdAt)) ? now() : item.createdAt,
+    updatedAt: Number.isNaN(Date.parse(item.updatedAt)) ? now() : item.updatedAt,
+  }
+}
+
 const useLinksStore = create(
   persist(
     (set, get) => ({
@@ -276,16 +295,25 @@ const useLinksStore = create(
         links: state.links,
         collections: state.collections,
       }),
-      migrate: (persistedState) => ({
-        links: Array.isArray(persistedState?.links) && persistedState.links.length > 0
-          ? persistedState.links
+      migrate: (persistedState) => {
+        const collections = Array.isArray(persistedState?.collections)
+          ? persistedState.collections
+          : defaultCollections
+        const legacyLinks = Array.isArray(persistedState?.links) ? persistedState.links : []
+        const sourceLinks = legacyLinks.length > 0
+          ? legacyLinks
           : Array.isArray(persistedState?.collections)
             ? []
-            : demoLinks,
-        collections: Array.isArray(persistedState?.collections)
-          ? persistedState.collections
-          : defaultCollections,
-      }),
+            : demoLinks
+        const allowedCollectionIds = new Set(collections.map((item) => item.id))
+
+        return {
+          links: sourceLinks
+            .map((item) => sanitizePersistedLink(item, allowedCollectionIds))
+            .filter(Boolean),
+          collections,
+        }
+      },
     },
   ),
 )
