@@ -66,3 +66,6 @@
 .auth-page a{transition:color 130ms ease}
 @media(max-width:560px){.auth-page{padding:26px 14px}.auth-content{max-width:100%}.auth-page-heading{margin-bottom:21px}.auth-page-heading h1{font-size:26px}.auth-page-heading p{font-size:12px}.auth-form-card{padding:24px 19px 23px;border-radius:14px}.auth-form{gap:16px}.auth-code-inputs{gap:6px}.auth-code-inputs input{height:52px;border-radius:9px;font-size:19px}.auth-email-confirmation{font-size:10px}.auth-submit-button{min-height:46px}}
 @media(max-width:360px){.auth-code-inputs{gap:4px}.auth-code-inputs input{height:46px}.auth-form-card{padding:20px 14px}}
+
+.auth-resend-row{display:flex;flex-direction:column;gap:5px;padding:8px 10px}
+.auth-demo-code-hint{color:#6f9bd0;font-size:9px;font-weight:600}
