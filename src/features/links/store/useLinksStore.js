@@ -118,6 +118,8 @@ function normalizeImportedLink(item, collectionId) {
     title,
     url,
     notes: String(item.notes || '').trim().slice(0, 2000),
+    description: String(item.description || item.notes || '').trim().slice(0, 500),
+    coverImageUrl: typeof item.coverImageUrl === 'string' && isSafeUrl(item.coverImageUrl) ? item.coverImageUrl : null,
     thumbnail: typeof item.thumbnail === 'string' && item.thumbnail.startsWith('/assets/figma/')
       ? item.thumbnail
       : null,
@@ -149,6 +151,8 @@ function sanitizePersistedLink(item, allowedCollectionIds) {
     title,
     url,
     notes: String(item.notes || '').trim().slice(0, 2000),
+    description: String(item.description || item.notes || '').trim().slice(0, 500),
+    coverImageUrl: typeof item.coverImageUrl === 'string' && isSafeUrl(item.coverImageUrl) ? item.coverImageUrl : null,
     thumbnail,
     collectionId: allowedCollectionIds.has(item.collectionId) ? item.collectionId : null,
     favorite: Boolean(item.favorite),
@@ -170,6 +174,8 @@ const useLinksStore = create(
           title: payload.title.trim(),
           url: payload.url.trim(),
           notes: (payload.notes || '').trim(),
+          description: (payload.description || '').trim().slice(0, 500),
+          coverImageUrl: payload.coverImageUrl || null,
           collectionId: payload.collectionId || null,
           favorite: Boolean(payload.favorite),
           createdAt: timestamp,
@@ -189,6 +195,8 @@ const useLinksStore = create(
                   title: payload.title.trim(),
                   url: payload.url.trim(),
                   notes: (payload.notes || '').trim(),
+                  description: (payload.description || '').trim().slice(0, 500),
+                  coverImageUrl: payload.coverImageUrl || null,
                   collectionId: payload.collectionId || null,
                   favorite: Boolean(payload.favorite),
                   updatedAt: now(),
@@ -199,6 +207,22 @@ const useLinksStore = create(
 
       removeLink: (id) =>
         set((state) => ({ links: state.links.filter((link) => link.id !== id) })),
+
+      removeLinks: (ids) => {
+        const selected = new Set(ids)
+        set((state) => ({ links: state.links.filter((link) => !selected.has(link.id)) }))
+      },
+
+      setCollectionLinks: (collectionId, linkIds) => {
+        const selected = new Set(linkIds)
+        set((state) => ({
+          links: state.links.map((link) => {
+            if (selected.has(link.id)) return { ...link, collectionId, updatedAt: now() }
+            if (link.collectionId === collectionId) return { ...link, collectionId: null, updatedAt: now() }
+            return link
+          }),
+        }))
+      },
 
       toggleFavorite: (id) =>
         set((state) => ({
@@ -239,6 +263,16 @@ const useLinksStore = create(
             link.collectionId === id ? { ...link, collectionId: null } : link,
           ),
         })),
+
+      deleteCollections: (ids) => {
+        const selected = new Set(ids)
+        set((state) => ({
+          collections: state.collections.filter((item) => !selected.has(item.id)),
+          links: state.links.map((link) =>
+            selected.has(link.collectionId) ? { ...link, collectionId: null, updatedAt: now() } : link,
+          ),
+        }))
+      },
 
       importBackup: (backup) => {
         if (!backup || !Array.isArray(backup.links)) {
@@ -305,7 +339,7 @@ const useLinksStore = create(
     }),
     {
       name: 'link-vault:links',
-      version: 3,
+      version: 4,
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         links: state.links,
