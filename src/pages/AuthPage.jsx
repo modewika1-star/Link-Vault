@@ -16,6 +16,7 @@ import {
 } from '../features/auth/validation/authSchemas.js'
 import useDemoAuthStore from '../features/auth/store/useDemoAuthStore.js'
 import './AuthPage.css'
+import { useTranslation } from '../i18n/translations.js'
 
 const pageConfig = {
   register: {
@@ -52,6 +53,7 @@ const pageConfig = {
 
 export default function AuthPage({ mode = 'login' }) {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const location = useLocation()
   const signIn = useDemoAuthStore((state) => state.signIn)
   const register = useDemoAuthStore((state) => state.register)
@@ -121,11 +123,11 @@ export default function AuthPage({ mode = 'login' }) {
 
   const fieldError = (name) =>
     formik.touched[name] && formik.errors[name]
-      ? <small className="auth-field-error">{formik.errors[name]}</small>
+      ? <small className="auth-field-error">{t(formik.errors[name])}</small>
       : null
 
   const handleSocialPreview = (provider) => {
-    setNotice(`${provider} sign-in is shown as a design preview. No external authentication is connected.`)
+    setNotice(t('{provider} sign-in is shown as a design preview. No external authentication is connected.', { provider }))
   }
 
   const submitCode = (event) => {
@@ -182,16 +184,16 @@ export default function AuthPage({ mode = 'login' }) {
     <main className="auth-page">
       <div className="auth-content">
         <header className="auth-page-heading">
-          <span className="auth-badge">{badgeIcon}{config.badge}</span>
-          <h1>{config.title}</h1>
-          <p>{config.subtitle}</p>
+          <span className="auth-badge">{badgeIcon}{t(config.badge)}</span>
+          <h1>{t(config.title)}</h1>
+          <p>{t(config.subtitle)}</p>
         </header>
 
         <section className={isRegister ? 'auth-form-card register-card' : isVerify ? 'auth-form-card verify-card' : isForgot ? 'auth-form-card recovery-card' : 'auth-form-card'}>
           {isRegister && (
             <form className="auth-form" onSubmit={formik.handleSubmit} noValidate>
               <label className="auth-field">
-                <span>FULL NAME</span>
+                <span>{t('FULL NAME')}</span>
                 <span className="auth-input-wrap">
                   <FiUser />
                   <input name="fullName" autoComplete="name" value={formik.values.fullName} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="Sarah Connor" aria-invalid={Boolean(formik.touched.fullName && formik.errors.fullName)} />
@@ -200,7 +202,7 @@ export default function AuthPage({ mode = 'login' }) {
               </label>
 
               <label className="auth-field">
-                <span>EMAIL ADDRESS</span>
+                <span>{t('EMAIL ADDRESS')}</span>
                 <span className="auth-input-wrap">
                   <FiMail />
                   <input name="email" type="email" autoComplete="email" inputMode="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="you@domain.com" aria-invalid={Boolean(formik.touched.email && formik.errors.email)} />
@@ -209,32 +211,32 @@ export default function AuthPage({ mode = 'login' }) {
               </label>
 
               <label className="auth-field">
-                <span>PASSWORD</span>
+                <span>{t('PASSWORD')}</span>
                 <span className="auth-input-wrap">
                   <FiLock />
-                  <input name="password" type={showPassword ? 'text' : 'password'} autoComplete="new-password" value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="At least 8 characters" aria-invalid={Boolean(formik.touched.password && formik.errors.password)} />
-                  <button className="auth-password-toggle" type="button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? 'Hide password' : 'Show password'}>{showPassword ? <FiEyeOff /> : <FiEye />}</button>
+                  <input name="password" type={showPassword ? 'text' : 'password'} autoComplete="new-password" value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder={t('At least 8 characters')} aria-invalid={Boolean(formik.touched.password && formik.errors.password)} />
+                  <button className="auth-password-toggle" type="button" onClick={() => setShowPassword((value) => !value)} aria-label={t(showPassword ? 'Hide password' : 'Show password')}>{showPassword ? <FiEyeOff /> : <FiEye />}</button>
                 </span>
                 {fieldError('password')}
               </label>
 
               <label className="auth-field">
-                <span>CONFIRM PASSWORD</span>
+                <span>{t('CONFIRM PASSWORD')}</span>
                 <span className="auth-input-wrap">
                   <FiLock />
-                  <input name="confirmPassword" type={showConfirmation ? 'text' : 'password'} autoComplete="new-password" value={formik.values.confirmPassword} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="Repeat your password" aria-invalid={Boolean(formik.touched.confirmPassword && formik.errors.confirmPassword)} />
-                  <button className="auth-password-toggle" type="button" onClick={() => setShowConfirmation((value) => !value)} aria-label={showConfirmation ? 'Hide confirmation' : 'Show confirmation'}>{showConfirmation ? <FiEyeOff /> : <FiEye />}</button>
+                  <input name="confirmPassword" type={showConfirmation ? 'text' : 'password'} autoComplete="new-password" value={formik.values.confirmPassword} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder={t('Repeat your password')} aria-invalid={Boolean(formik.touched.confirmPassword && formik.errors.confirmPassword)} />
+                  <button className="auth-password-toggle" type="button" onClick={() => setShowConfirmation((value) => !value)} aria-label={t(showConfirmation ? 'Hide confirmation' : 'Show confirmation')}>{showConfirmation ? <FiEyeOff /> : <FiEye />}</button>
                 </span>
                 {fieldError('confirmPassword')}
               </label>
 
               <label className="auth-check-row">
                 <input type="checkbox" name="acceptTerms" checked={formik.values.acceptTerms} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-                <span>I agree to LinkVault's <a href="#terms" onClick={(event) => { event.preventDefault(); setNotice('Terms of Service and Privacy Policy are preview text in this demo.') }}>Terms of Service</a> and <a href="#privacy" onClick={(event) => { event.preventDefault(); setNotice('Terms of Service and Privacy Policy are preview text in this demo.') }}>Privacy Policy</a>.</span>
+                <span>{t("I agree to LinkVault's")} <a href="#terms" onClick={(event) => { event.preventDefault(); setNotice('Terms of Service and Privacy Policy are preview text in this demo.') }}>{t('Terms of Service')}</a> {t('and')} <a href="#privacy" onClick={(event) => { event.preventDefault(); setNotice('Terms of Service and Privacy Policy are preview text in this demo.') }}>{t('Privacy Policy')}</a>.</span>
               </label>
               {fieldError('acceptTerms')}
 
-              <button className="auth-submit-button" type="submit" disabled={formik.isSubmitting}><FiUserPlus /> Create Account</button>
+              <button className="auth-submit-button" type="submit" disabled={formik.isSubmitting}><FiUserPlus /> {t('Create Account')}</button>
             </form>
           )}
 
@@ -250,7 +252,7 @@ export default function AuthPage({ mode = 'login' }) {
               </label>
 
               <label className="auth-field">
-                <span className="auth-field-label-row"><span>PASSWORD</span><Link to="/forgot-password">Forgot password?</Link></span>
+                <span className="auth-field-label-row"><span>{t('PASSWORD')}</span><Link to="/forgot-password">{t('Forgot password?')}</Link></span>
                 <span className="auth-input-wrap">
                   <FiLock />
                   <input name="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="••••••••" aria-invalid={Boolean(formik.touched.password && formik.errors.password)} />
@@ -261,25 +263,25 @@ export default function AuthPage({ mode = 'login' }) {
 
               <label className="auth-check-row">
                 <input type="checkbox" name="rememberMe" checked={formik.values.rememberMe} onChange={formik.handleChange} />
-                <span>Remember me on this device</span>
+                <span>{t('Remember me on this device')}</span>
               </label>
 
-              <button className="auth-submit-button" type="submit" disabled={formik.isSubmitting}><FiLogIn /> Sign In</button>
+              <button className="auth-submit-button" type="submit" disabled={formik.isSubmitting}><FiLogIn /> {t('Sign In')}</button>
             </form>
           )}
 
           {isForgot && (
             <form className="auth-form" onSubmit={formik.handleSubmit} noValidate>
               <label className="auth-field">
-                <span>REGISTERED EMAIL</span>
+                <span>{t('REGISTERED EMAIL')}</span>
                 <span className="auth-input-wrap">
                   <FiMail />
                   <input name="email" type="email" autoComplete="email" inputMode="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="you@domain.com" aria-invalid={Boolean(formik.touched.email && formik.errors.email)} />
                 </span>
                 {fieldError('email')}
               </label>
-              <button className="auth-submit-button" type="submit" disabled={formik.isSubmitting}><FiSend /> Send Verification Code <FiArrowRight /></button>
-              <Link className="auth-back-link" to="/login"><FiArrowLeft /> Back to Sign In</Link>
+              <button className="auth-submit-button" type="submit" disabled={formik.isSubmitting}><FiSend /> {t('Send Verification Code')} <FiArrowRight /></button>
+              <Link className="auth-back-link" to="/login"><FiArrowLeft /> {t('Back to Sign In')}</Link>
             </form>
           )}
 
@@ -287,9 +289,9 @@ export default function AuthPage({ mode = 'login' }) {
             <form className="auth-form verify-form" onSubmit={submitCode}>
               <div className="auth-email-confirmation">
                 <span><FiMail /> {emailFromFlow || 'you@domain.com'}</span>
-                <Link to="/forgot-password">Change</Link>
+                <Link to="/forgot-password">{t('Change')}</Link>
               </div>
-              <div className="auth-code-label">6-DIGIT SECURITY CODE</div>
+              <div className="auth-code-label">{t('6-DIGIT SECURITY CODE')}</div>
               <div className="auth-code-inputs" dir="ltr">
                 {Array.from({ length: 6 }, (_, index) => (
                   <input
@@ -305,20 +307,20 @@ export default function AuthPage({ mode = 'login' }) {
                     inputMode="numeric"
                     pattern="[0-9]*"
                     maxLength={6}
-                    aria-label={`Verification digit ${index + 1}`}
+                    aria-label={t('Verification digit {index}', { index: index + 1 })}
                   />
                 ))}
               </div>
               <div className="auth-resend-row">
-                <span className="auth-demo-code-hint">Demo code: 123456</span>
+                <span className="auth-demo-code-hint">{t('Demo code: 123456')}</span>
                 {secondsLeft > 0 ? (
-                  <span>Didn't get a code? Resend in <strong>00:{String(secondsLeft).padStart(2, '0')}</strong></span>
+                  <span>{t("Didn't get a code? Resend in")} <strong>00:{String(secondsLeft).padStart(2, '0')}</strong></span>
                 ) : (
-                  <button type="button" onClick={resendCode}>Didn't get a code? Resend</button>
+                  <button type="button" onClick={resendCode}>{t("Didn't get a code? Resend")}</button>
                 )}
               </div>
-              <button className="auth-submit-button" type="submit"><FiCheckCircle /> Verify &amp; Continue <FiArrowRight /></button>
-              <Link className="auth-back-link" to="/forgot-password"><FiArrowLeft /> Back to Request Code</Link>
+              <button className="auth-submit-button" type="submit"><FiCheckCircle /> {t('Verify & Continue')} <FiArrowRight /></button>
+              <Link className="auth-back-link" to="/forgot-password"><FiArrowLeft /> {t('Back to Request Code')}</Link>
             </form>
           )}
 
@@ -326,10 +328,10 @@ export default function AuthPage({ mode = 'login' }) {
             <form className="auth-form" onSubmit={formik.handleSubmit} noValidate>
               <div className="auth-email-confirmation">
                 <span><FiMail /> {emailFromFlow || 'you@domain.com'}</span>
-                <span className="auth-verified"><FiShield /> Verified Email</span>
+                <span className="auth-verified"><FiShield /> {t('Verified Email')}</span>
               </div>
               <label className="auth-field">
-                <span>NEW PASSWORD</span>
+                <span>{t('NEW PASSWORD')}</span>
                 <span className="auth-input-wrap">
                   <FiLock />
                   <input name="password" type={showPassword ? 'text' : 'password'} autoComplete="new-password" value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="At least 8 characters" aria-invalid={Boolean(formik.touched.password && formik.errors.password)} />
@@ -338,36 +340,36 @@ export default function AuthPage({ mode = 'login' }) {
                 {fieldError('password')}
               </label>
               <label className="auth-field">
-                <span>CONFIRM NEW PASSWORD</span>
+                <span>{t('CONFIRM NEW PASSWORD')}</span>
                 <span className="auth-input-wrap">
                   <FiLock />
-                  <input name="confirmPassword" type={showConfirmation ? 'text' : 'password'} autoComplete="new-password" value={formik.values.confirmPassword} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="Repeat your new password" aria-invalid={Boolean(formik.touched.confirmPassword && formik.errors.confirmPassword)} />
+                  <input name="confirmPassword" type={showConfirmation ? 'text' : 'password'} autoComplete="new-password" value={formik.values.confirmPassword} onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder={t('Repeat your new password')} aria-invalid={Boolean(formik.touched.confirmPassword && formik.errors.confirmPassword)} />
                   <button className="auth-password-toggle" type="button" onClick={() => setShowConfirmation((value) => !value)} aria-label={showConfirmation ? 'Hide confirmation' : 'Show confirmation'}>{showConfirmation ? <FiEyeOff /> : <FiEye />}</button>
                 </span>
                 {fieldError('confirmPassword')}
               </label>
-              <button className="auth-submit-button" type="submit" disabled={formik.isSubmitting}><FiKey /> Reset Password</button>
-              <div className="auth-bottom-prompt">Remember your credentials? <Link to="/login">Sign In</Link></div>
+              <button className="auth-submit-button" type="submit" disabled={formik.isSubmitting}><FiKey /> {t('Reset Password')}</button>
+              <div className="auth-bottom-prompt">{t('Remember your credentials?')} <Link to="/login">{t('Sign In')}</Link></div>
             </form>
           )}
 
-          {notice && <div className="auth-notice" role="status">{notice}</div>}
+          {notice && <div className="auth-notice" role="status">{t(notice)}</div>}
 
           {(isRegister || isLogin) && (
             <>
-              <div className="auth-divider"><span>{isRegister ? 'OR SIGN UP WITH' : 'OR CONTINUE WITH'}</span></div>
+              <div className="auth-divider"><span>{t(isRegister ? 'OR SIGN UP WITH' : 'OR CONTINUE WITH')}</span></div>
               <div className="auth-social-row">
                 <button type="button" onClick={() => handleSocialPreview('Google')}><FcGoogle /> Google</button>
                 <button type="button" onClick={() => handleSocialPreview('GitHub')}><FaGithub /> GitHub</button>
               </div>
               <div className="auth-bottom-prompt">
-                {isRegister ? <>Already have an account? <Link to="/login">Sign In <FiArrowRight /></Link></> : <>Don't have an account? <Link to="/register">Create one now <FiArrowRight /></Link></>}
+                {isRegister ? <>{t('Already have an account?')} <Link to="/login">{t('Sign In')} <FiArrowRight /></Link></> : <>{t("Don't have an account?")} <Link to="/register">{t('Create one now')} <FiArrowRight /></Link></>}
               </div>
             </>
           )}
         </section>
 
-        <p className="auth-demo-note">Demo preview: passwords are never saved, and no real email or social sign-in is performed.</p>
+        <p className="auth-demo-note">{t('Demo preview: passwords are never saved, and no real email or social sign-in is performed.')}</p>
       </div>
     </main>
   )
