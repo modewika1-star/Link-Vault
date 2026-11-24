@@ -4,6 +4,11 @@
   --lv-surface:#fff;
   --lv-ink:#0f172b;
   --lv-ink-soft:#314158;
+  --lv-brand-hover:#26344d;
+  --lv-radius-control:8px;
+  --lv-radius-card:11px;
+  --lv-radius-panel:14px;
+  --lv-space-page:24px;
   --lv-secondary:#45556c;
   --lv-muted:#90a1b9;
   --lv-line:#e2e8f0;
@@ -16,6 +21,7 @@
 }
 @theme inline{
   --color-brand:var(--lv-ink);
+  --color-brand-hover:var(--lv-brand-hover);
   --color-canvas:var(--lv-canvas);
   --color-surface:var(--lv-surface);
   --color-ink:var(--lv-ink);
@@ -25,4 +31,8 @@
   --color-danger:var(--lv-danger);
   --font-sans:var(--lv-font-family);
   --shadow-card:var(--lv-shadow-card);
+  --spacing-page:var(--lv-space-page);
+  --radius-control:var(--lv-radius-control);
+  --radius-card:var(--lv-radius-card);
+  --radius-panel:var(--lv-radius-panel);
 }
