@@ -35,7 +35,7 @@
   margin:var(--lv-unit-6px) 0 var(--lv-unit-5px);
   color:var(--lv-ink);
   font-size:var(--lv-unit-21px);
-  letter-spacing:calc(-1 * var(--lv-unit--55px))
+  letter-spacing:calc(-1 * var(--lv-unit-0-55px))
 }
 .settings-header p {
   margin:0;

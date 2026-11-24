@@ -70,7 +70,7 @@ scripts/                       # Optional Figma asset download helper
 
 ## Design system
 
-Shared colors, spacing, sizing, typography, border radii, and shadows are defined in `src/styles/design-tokens.css`. Component styles should use those variables instead of introducing new one-off visual values. The same file exposes the core colors, type, spacing, radius, and shadow tokens to Tailwind through `@theme inline`.
+Shared colors, spacing, sizing, typography, border radii, and shadows are defined in `src/styles/design-tokens.css`. Component styles use those variables rather than adding one-off visual values. The same file exposes the core visual tokens and responsive breakpoints to Tailwind through `@theme`. The existing CSS media-query thresholds remain literal because browser media-query conditions cannot substitute CSS custom properties.
 
 ## Data and privacy
 

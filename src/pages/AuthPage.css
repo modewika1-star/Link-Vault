@@ -34,7 +34,7 @@
   color:var(--lv-color-78b6ff);
   font-size:var(--lv-unit-11px);
   font-weight:600;
-  letter-spacing:var(--lv-unit--1px)
+  letter-spacing:var(--lv-unit-0-1px)
 }
 .auth-badge svg {
   width:var(--lv-unit-13px);
@@ -45,7 +45,7 @@
   color:var(--lv-color-f3f6fc);
   font-size:var(--lv-unit-30px);
   font-weight:750;
-  letter-spacing:calc(-1 * var(--lv-unit--85px));
+  letter-spacing:calc(-1 * var(--lv-unit-0-85px));
   line-height:1.2
 }
 .auth-page-heading p {
@@ -77,7 +77,7 @@
   color:var(--lv-color-c8d2e1);
   font-size:var(--lv-unit-10px);
   font-weight:650;
-  letter-spacing:var(--lv-unit--5px)
+  letter-spacing:var(--lv-unit-0-5px)
 }
 .auth-field-label-row {
   display:flex;
@@ -377,7 +377,7 @@
   color:var(--lv-color-c8d2e1);
   font-size:var(--lv-unit-10px);
   font-weight:650;
-  letter-spacing:var(--lv-unit--55px);
+  letter-spacing:var(--lv-unit-0-55px);
   text-align:center
 }
 .auth-code-inputs {

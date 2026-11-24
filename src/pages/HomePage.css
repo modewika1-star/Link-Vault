@@ -32,7 +32,7 @@
   color:var(--lv-ink);
   font-size:var(--lv-unit-16px);
   font-weight:600;
-  letter-spacing:calc(-1 * var(--lv-unit--4px))
+  letter-spacing:calc(-1 * var(--lv-unit-0-4px))
 }
 .brand-mark {
   display:grid;
@@ -67,7 +67,7 @@
   color:var(--lv-muted);
   font-size:var(--lv-unit-12px);
   font-weight:600;
-  letter-spacing:var(--lv-unit--6px);
+  letter-spacing:var(--lv-unit-0-6px);
   line-height:var(--lv-unit-16px);
   text-transform:uppercase
 }
@@ -484,14 +484,14 @@
   color:var(--lv-muted);
   font-size:var(--lv-unit-11px);
   font-weight:700;
-  letter-spacing:var(--lv-unit--9px)
+  letter-spacing:var(--lv-unit-0-9px)
 }
 .page-heading-row h1 {
   margin:0;
   color:var(--lv-ink);
   font-size:clamp(var(--lv-unit-25px),var(--lv-unit-2-5vw),var(--lv-unit-30px));
   font-weight:700;
-  letter-spacing:calc(-1 * var(--lv-unit--8px));
+  letter-spacing:calc(-1 * var(--lv-unit-0-8px));
   line-height:1.2
 }
 .page-heading-row p {
@@ -1217,9 +1217,9 @@
 @media(prefers-reduced-motion:reduce) {
   *,*::before,*::after {
     scroll-behavior:auto!important;
-    animation-duration:var(--lv-unit--01ms)!important;
+    animation-duration:var(--lv-unit-0-01ms)!important;
     animation-iteration-count:1!important;
-    transition-duration:var(--lv-unit--01ms)!important
+    transition-duration:var(--lv-unit-0-01ms)!important
   }
 }
 @media(max-width:760px) {
@@ -1725,7 +1725,7 @@
   color:var(--lv-color-c4d3f2);
   font-size:var(--lv-unit-10px);
   font-weight:650;
-  letter-spacing:var(--lv-unit--05px)
+  letter-spacing:var(--lv-unit-0-05px)
 }
 .collection-dot {
   width:var(--lv-unit-7px);
@@ -1797,7 +1797,7 @@
   color:var(--lv-color-172033);
   font-size:var(--lv-unit-16px);
   font-weight:650;
-  letter-spacing:calc(-1 * var(--lv-unit--2px))
+  letter-spacing:calc(-1 * var(--lv-unit-0-2px))
 }
 .link-modal-body {
   gap:var(--lv-unit-14px);
@@ -1958,7 +1958,7 @@
   color:var(--lv-ink);
   font-size:clamp(var(--lv-unit-23px),var(--lv-unit-2vw),var(--lv-unit-27px));
   font-weight:700;
-  letter-spacing:calc(-1 * var(--lv-unit--75px));
+  letter-spacing:calc(-1 * var(--lv-unit-0-75px));
   line-height:1.25
 }
 .page-heading-copy p {

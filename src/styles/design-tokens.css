@@ -1,5 +1,6 @@
 /* Shared palette and sizing scale used throughout the interface. */
 :root {
+  /* Color palette */
   --lv-color-020817: #020817;
   --lv-color-0b1220: #0b1220;
   --lv-color-0b1734: #0b1734;
@@ -188,18 +189,19 @@
   --lv-color-rgb-66-133-244-pct-12pct: rgb(66 133 244 / 12%);
   --lv-color-black: black;
 
-  --lv-unit--01ms: .01ms;
-  --lv-unit--05px: .05px;
-  --lv-unit--1px: .1px;
-  --lv-unit--2px: .2px;
-  --lv-unit--4px: .4px;
-  --lv-unit--55px: .55px;
-  --lv-unit--5px: .5px;
-  --lv-unit--6px: .6px;
-  --lv-unit--75px: .75px;
-  --lv-unit--85px: .85px;
-  --lv-unit--8px: .8px;
-  --lv-unit--9px: .9px;
+  /* Spacing, dimensions, and motion values */
+  --lv-unit-0-01ms: 0.01ms;
+  --lv-unit-0-05px: 0.05px;
+  --lv-unit-0-1px: 0.1px;
+  --lv-unit-0-2px: 0.2px;
+  --lv-unit-0-4px: 0.4px;
+  --lv-unit-0-55px: 0.55px;
+  --lv-unit-0-5px: 0.5px;
+  --lv-unit-0-6px: 0.6px;
+  --lv-unit-0-75px: 0.75px;
+  --lv-unit-0-85px: 0.85px;
+  --lv-unit-0-8px: 0.8px;
+  --lv-unit-0-9px: 0.9px;
   --lv-unit-1-1px: 1.1px;
   --lv-unit-100dvh: 100dvh;
   --lv-unit-100pct: 100%;
@@ -342,6 +344,7 @@
   --lv-unit-999px: 999px;
   --lv-unit-9px: 9px;
 
+  /* Semantic interface colors and reusable visual tokens */
   --lv-canvas: var(--lv-color-f8fafc);
   --lv-sidebar: var(--lv-canvas);
   --lv-surface: var(--lv-color-fff);
@@ -363,6 +366,7 @@
   --lv-font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+/* Tailwind breakpoints for responsive utility variants. */
 @theme {
   --breakpoint-xs: 22.5rem;
   --breakpoint-sm: 32.5rem;
