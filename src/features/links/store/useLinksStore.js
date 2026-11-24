@@ -124,7 +124,7 @@ function normalizeImportedLink(item, collectionId) {
     id: makeId(),
     title,
     url,
-    notes: String(item.notes || '').trim().slice(0, 2000),
+    notes: typeof item.description === 'string' ? String(item.notes || '').trim().slice(0, 2000) : '',
     description: String(item.description || item.notes || '').trim().slice(0, 500),
     coverImageUrl: typeof item.coverImageUrl === 'string' && isSafeUrl(item.coverImageUrl) ? item.coverImageUrl : null,
     thumbnail: typeof item.thumbnail === 'string' && item.thumbnail.startsWith('/assets/figma/')
@@ -157,7 +157,7 @@ function sanitizePersistedLink(item, allowedCollectionIds) {
     id: typeof item.id === 'string' && item.id ? item.id : makeId(),
     title,
     url,
-    notes: String(item.notes || '').trim().slice(0, 2000),
+    notes: typeof item.description === 'string' ? String(item.notes || '').trim().slice(0, 2000) : '',
     description: String(item.description || item.notes || '').trim().slice(0, 500),
     coverImageUrl: typeof item.coverImageUrl === 'string' && isSafeUrl(item.coverImageUrl) ? item.coverImageUrl : null,
     thumbnail,
