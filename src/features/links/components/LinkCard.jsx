@@ -7,7 +7,6 @@ import {
   FiGlobe,
   FiBookmark,
 } from 'react-icons/fi'
-import { formatRelativeDate } from '../utils/linkUtils.js'
 
 export default function LinkCard({ link, collection, onFavorite, onEdit, onDelete }) {
   const [imageFailed, setImageFailed] = useState(false)
@@ -44,8 +43,14 @@ export default function LinkCard({ link, collection, onFavorite, onEdit, onDelet
       <div className="bookmark-card-copy">
         <div className="bookmark-meta-line">
           <span className="bookmark-domain"><FiGlobe /> {hostname}</span>
-          <span className="meta-dot" />
-          <span>{formatRelativeDate(link.createdAt)}</span>
+          {collection ? (
+            <span className="collection-tag" style={{ '--collection-color': collection.color }}>
+              <span className="collection-dot" />
+              {collection.name}
+            </span>
+          ) : (
+            <span className="collection-tag is-muted">Uncategorized</span>
+          )}
         </div>
         <h3 className="bookmark-title">
           <a href={link.url} target="_blank" rel="noopener noreferrer">
@@ -59,14 +64,6 @@ export default function LinkCard({ link, collection, onFavorite, onEdit, onDelet
       </div>
 
       <footer className="bookmark-card-footer">
-        {collection ? (
-          <span className="collection-tag" style={{ '--collection-color': collection.color }}>
-            <span className="collection-dot" />
-            {collection.name}
-          </span>
-        ) : (
-          <span className="collection-tag is-muted">Uncategorized</span>
-        )}
         <div className="bookmark-card-actions" aria-label={`Actions for ${link.title}`}>
           <button
             type="button"
