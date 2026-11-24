@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import { FiCheck, FiX } from 'react-icons/fi'
-import linkSchema from '../validation/linkSchema'
+import linkSchema, { editLinkSchema } from '../validation/linkSchema'
+import { verifyBookmarkUrl, verifyCoverImage } from '../services/linkValidationService.js'
 import api from '../../../lib/axios.js'
 import { formatText } from '../../../lib/text.js'
 
@@ -18,6 +19,7 @@ const emptyValues = {
 export default function LinkModal({ open, link, collections, onClose, onSave }) {
   const t = formatText
   const [previewLoading, setPreviewLoading] = useState(false)
+  const [checkingLink, setCheckingLink] = useState(false)
   const formik = useFormik({
     initialValues: link
       ? {
@@ -31,9 +33,12 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
         }
       : emptyValues,
     enableReinitialize: true,
-    validationSchema: linkSchema,
+    validationSchema: link ? editLinkSchema : linkSchema,
     onSubmit: async (values, helpers) => {
-      await onSave({
+      setCheckingLink(true)
+      helpers.setStatus('')
+
+      const bookmark = {
         ...values,
         title: values.title.trim(),
         url: values.url.trim(),
@@ -41,8 +46,27 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
         coverImageUrl: values.coverImageUrl.trim() || null,
         notes: values.notes.trim(),
         collectionId: values.collectionId || null,
-      })
-      helpers.setSubmitting(false)
+      }
+
+      try {
+        try {
+          await verifyBookmarkUrl(bookmark.url)
+          if (bookmark.coverImageUrl) await verifyCoverImage(bookmark.coverImageUrl)
+        } catch (error) {
+          const field = error.field || 'url'
+          helpers.setFieldTouched(field, true, false)
+          helpers.setFieldError(field, error.message || 'This field could not be verified.')
+          helpers.setStatus('The bookmark was not saved because its link or cover image could not be verified.')
+          return
+        }
+
+        await onSave(bookmark)
+      } catch {
+        helpers.setStatus('The bookmark could not be saved. Please try again.')
+      } finally {
+        setCheckingLink(false)
+        helpers.setSubmitting(false)
+      }
     },
   })
 
@@ -128,13 +152,14 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
                   autoFocus
                   name="url"
                   type="url"
+                  required
                   value={formik.values.url}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="https://example.com/article"
                   aria-invalid={Boolean(urlError)}
                 />
-                <button className="preview-button" type="button" onClick={fetchPreview} disabled={previewLoading}>
+                <button className="preview-button" type="button" onClick={fetchPreview} disabled={previewLoading || checkingLink}>
                   <svg
                     width="14"
                     height="14"
@@ -195,9 +220,10 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
             </label>
 
             <label className="field">
-              <span>{t('Description')}</span>
+              <span>{t('Description')} <b>*</b></span>
               <textarea
                 name="description"
+                required
                 value={formik.values.description}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -210,10 +236,11 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
             </label>
 
             <label className="field">
-              <span>{t('Cover Image URL')}</span>
+              <span>{t('Cover Image URL')} <b>*</b></span>
               <input
                 name="coverImageUrl"
                 type="url"
+                required={!link}
                 value={formik.values.coverImageUrl}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -253,9 +280,9 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
 
           <footer className="modal-footer">
             <button className="button button-secondary" type="button" onClick={onClose}>{t('Cancel')}</button>
-            <button className="button button-primary" type="submit" disabled={formik.isSubmitting}>
+            <button className="button button-primary" type="submit" disabled={formik.isSubmitting || checkingLink}>
               <FiCheck />
-              {formik.isSubmitting ? t('Saving...') : link ? t('Save Bookmark') : t('Save Bookmark')}
+              {checkingLink ? t('Checking link...') : formik.isSubmitting ? t('Saving...') : t('Save Bookmark')}
             </button>
           </footer>
         </form>

@@ -10,7 +10,8 @@ LinkVault is a responsive bookmark manager built with React and Vite. It keeps l
 - Mark favorites, search saved content, and sort by date or title.
 - Switch between grid and list views.
 - Switch between light and dark themes.
-- Fetch a page title, description, and cover image when a public preview is available.
+- Require a URL, title, description, and cover image when creating a new bookmark.
+- Verify that the destination page responds and that the cover image loads before saving.
 - Manage bookmarks and collections from Settings.
 - Use the demo sign-in, registration, and password recovery screens to preview the account UI.
 
@@ -42,7 +43,7 @@ npm run build
 | `zustand` | Hold bookmarks, collections, demo session state, and user preferences. The persist middleware saves the relevant state in localStorage. |
 | `formik` | Manage the bookmark, collection, and account forms, including field state and submission. |
 | `yup` | Validate URLs, required fields, email addresses, and password rules before forms are submitted. |
-| `axios` | Request public page metadata from the Microlink preview endpoint when the user chooses Fetch Preview. |
+| `axios` | Fetch page metadata and verify that a bookmark URL is reachable through Microlink before saving. |
 | `tailwindcss` and `@tailwindcss/vite` | Load Tailwind CSS v4 in the Vite build. Utility classes are available alongside the project's component styles. |
 | `react-icons` | Provide interface icons and fallbacks when an original Figma SVG cannot load. |
 | `vite` and `@vitejs/plugin-react` | Run the local development server and build the React application. |
@@ -74,7 +75,7 @@ Shared colors, spacing, sizing, typography, border radii, and shadows are define
 
 ## Data and privacy
 
-Bookmarks, collections, theme preferences, and the demo profile are stored in the current browser's localStorage. They are not synchronized between browsers or devices. The page-preview request sends the URL entered by the user to the Microlink service to retrieve public metadata.
+Bookmarks, collections, theme preferences, and the demo profile are stored in the current browser's localStorage. They are not synchronized between browsers or devices. Bookmark URL verification and page previews send the URL entered by the user to the Microlink service. Cover images are checked by loading them in the browser before a bookmark is saved.
 
 The initial workspace includes sample links and collections so the interface is populated on first launch. Users can remove or edit these examples in the workspace.
 
