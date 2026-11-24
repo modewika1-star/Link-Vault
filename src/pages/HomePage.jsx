@@ -186,7 +186,7 @@ export default function HomePage() {
     document.body.appendChild(anchor)
     anchor.click()
     anchor.remove()
-    URL.revokeObjectURL(url)
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000)
     setToolsOpen(false)
     notify('Your backup file is ready.')
   }
@@ -225,9 +225,6 @@ export default function HomePage() {
 
       <aside className={mobileSidebarOpen ? 'sidebar is-open' : 'sidebar'}>
         <div className="sidebar-brand">
-          <button className="mobile-close icon-button" type="button" onClick={() => setMobileSidebarOpen(false)} aria-label="Close navigation">
-            <FiX />
-          </button>
           <a className="brand-link" href="/" onClick={(event) => { event.preventDefault(); selectView('all') }}>
             <span className="brand-mark"><FiBookmark /></span>
             <span>LinkVault</span>
