@@ -58,7 +58,9 @@ export default function HomePage() {
   const toggleFavorite = useLinksStore((state) => state.toggleFavorite)
   const addCollection = useLinksStore((state) => state.addCollection)
   const renameCollection = useLinksStore((state) => state.renameCollection)
-  const deleteCollection = useLinksStore((state) => state.deleteCollection)
+  const removeLinks = useLinksStore((state) => state.removeLinks)
+  const deleteCollections = useLinksStore((state) => state.deleteCollections)
+  const setCollectionLinks = useLinksStore((state) => state.setCollectionLinks)
   const exportBackup = useLinksStore((state) => state.exportBackup)
   const importBackup = useLinksStore((state) => state.importBackup)
 
@@ -163,15 +165,6 @@ export default function HomePage() {
     notify('Bookmark deleted.')
   }
 
-  const copyLink = async (url) => {
-    try {
-      await navigator.clipboard.writeText(url)
-      notify('Link copied to clipboard.')
-    } catch {
-      window.prompt('Copy this link:', url)
-    }
-  }
-
   const createCollection = (name, color) => {
     const result = addCollection(name, color)
     if (result.error) return result
@@ -180,19 +173,33 @@ export default function HomePage() {
     return result
   }
 
-  const handleRenameCollection = (collection) => {
-    const nextName = window.prompt('Rename collection:', collection.name)
-    if (nextName === null) return
-    const result = renameCollection(collection.id, nextName)
-    if (result.error) notify(result.error)
-    else notify('Collection renamed.')
+  const handleManagerDeleteBookmarks = (ids) => {
+    removeLinks(ids)
+    notify(`${ids.length} bookmark(s) deleted.`)
   }
 
-  const handleDeleteCollection = (collection) => {
-    if (!window.confirm(`Delete "${collection.name}"? Its bookmarks will be kept as uncategorized.`)) return
-    deleteCollection(collection.id)
-    if (activeCollectionId === collection.id) selectView('all')
-    notify('Collection deleted. Its bookmarks were kept.')
+  const handleManagerDeleteCollections = (ids) => {
+    deleteCollections(ids)
+    if (ids.includes(activeCollectionId)) selectView('all')
+    notify(`${ids.length} collection(s) deleted. Their bookmarks were kept.`)
+  }
+
+  const handleManagerRenameCollection = (id, name) => {
+    const result = renameCollection(id, name)
+    if (result.error) notify(result.error)
+    else notify('Collection renamed.')
+    return result
+  }
+
+  const handleManagerCreateCollection = (name, color) => {
+    const result = addCollection(name, color)
+    if (!result.error) notify('Collection created.')
+    return result
+  }
+
+  const handleSetCollectionLinks = (collectionId, linkIds) => {
+    setCollectionLinks(collectionId, linkIds)
+    notify('Collection links updated.')
   }
 
   const handleExport = () => {
@@ -317,13 +324,6 @@ export default function HomePage() {
                     </span>
                     <span className="nav-count">{getCollectionCount(links, collection.id)}</span>
                   </button>
-                  <details className="collection-more">
-                    <summary aria-label={`Options for ${collection.name}`}><span>•••</span></summary>
-                    <div className="collection-menu">
-                      <button type="button" onClick={() => handleRenameCollection(collection)}>Rename</button>
-                      <button type="button" className="danger-menu-item" onClick={() => handleDeleteCollection(collection)}>Delete</button>
-                    </div>
-                  </details>
                 </div>
               ))}
               {collections.length === 0 && (
@@ -450,7 +450,6 @@ export default function HomePage() {
                   onFavorite={toggleFavorite}
                   onEdit={openEditLink}
                   onDelete={deleteLink}
-                  onCopy={copyLink}
                 />
               ))}
             </section>
@@ -482,6 +481,15 @@ export default function HomePage() {
         onThemeChange={usePreferencesStore.getState().setTheme}
         viewMode={viewMode}
         onViewModeChange={setViewMode}
+        links={links}
+        collections={collections}
+        onAddBookmark={() => { setSettingsOpen(false); openNewLink() }}
+        onEditBookmark={(link) => { setSettingsOpen(false); openEditLink(link) }}
+        onDeleteBookmarks={handleManagerDeleteBookmarks}
+        onDeleteCollections={handleManagerDeleteCollections}
+        onRenameCollection={handleManagerRenameCollection}
+        onCreateCollection={handleManagerCreateCollection}
+        onSetCollectionLinks={handleSetCollectionLinks}
       />
 
       {toast && <div className="toast-message" role="status"><FiCheck /> {toast}</div>}
