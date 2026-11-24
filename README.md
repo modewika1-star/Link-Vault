@@ -1,54 +1,54 @@
 # LinkVault
 
-A responsive bookmark manager built with React, Vite, Zustand, Formik, Yup, and Tailwind CSS. The interface follows the inspected Figma **Desktop Light mode** design: a 256px navigation sidebar, Smart Views, Collections, a searchable header, sorting controls, and bookmark cards.
+A responsive bookmark manager based on the inspected Figma **Desktop Light mode** frame. Built with React, Vite, Zustand, Formik, Yup, Tailwind CSS, and custom CSS.
 
-## Features
+## Workspace features
 
 - Add, edit, and delete bookmarks.
-- Validate titles and allow only HTTP/HTTPS URLs.
-- Add notes and assign bookmarks to collections.
-- Mark bookmarks as favorites and use the Favorites smart view.
+- Save notes and assign bookmarks to collections.
+- Favorite bookmarks and filter by Favorites.
 - Create, rename, and delete collections.
-- Search bookmark titles, URLs, and notes.
-- Sort by newest, oldest, title A–Z, or title Z–A.
-- Import and export a JSON backup containing bookmarks and collections.
-- Responsive sidebar and layout for smaller screens.
-- Dynamic website favicons with a local icon fallback.
-- Automatic persistence in browser localStorage.
+- Search titles, URLs, and notes.
+- Sort by newest, oldest, title A–Z, and title Z–A.
+- Switch between grid and list layouts.
+- Switch between light and dark appearance.
+- Open Settings to change and persist appearance and layout preferences.
+- Import and export a JSON backup for bookmarks and collections.
+- Original Figma SVG icons and project images, with graceful icon/favicon fallbacks.
+- Responsive desktop, tablet, and mobile layout.
 
-## Important storage note
+## Demo account screens
 
-This version stores data in the current browser on the current device. It does not include user accounts, a hosted database, or automatic synchronization between browsers/devices. Use **Export backup** and **Import backup** to move your data.
+The app includes visual sign-in, registration, password-reset, and sign-out flows. These screens validate email shape, password length, and confirmation fields. A successful sign-in/register stores only a demo profile (name and email) in browser storage. **No password is stored, no real authentication provider is connected, and no reset email is sent.**
 
-The first run includes seven example bookmarks across three collections to demonstrate the designed layout. You can edit or delete them like any other bookmark.
+Any syntactically valid email and password meeting the form rules can be used to preview the demo flow.
 
-## Tech Stack
+## Data and privacy
 
-| Library | Usage |
-|---|---|
-| React | Component-based interface |
-| React Router DOM | Client-side routing |
-| Zustand | Application state and persisted bookmarks |
-| Formik | Bookmark forms |
-| Yup | Validation |
-| Tailwind CSS v4 | Utility CSS integration |
-| Custom CSS | Figma-aligned layout and responsive styling |
-| React Icons | Interface icons |
-| Axios | Prepared HTTP client for a future API integration |
-| Vite | Development server and production build |
-| Oxlint | Static code checks |
-| Node.js test runner | Unit tests for search and sorting utilities |
+Bookmarks, collections, theme preferences, and the demo profile are stored in the current browser's localStorage. They are not synchronized between devices or browsers. Use **Export backup** and **Import backup** to move bookmark data.
 
-## Getting Started
+The initial workspace contains seven sample bookmarks across three collections to illustrate the Figma layout. Sample React, Tailwind CSS, and Hugging Face cards use original Figma project image assets when those files are downloaded; otherwise, the site favicon or icon fallback is shown.
 
-Requirements: Node.js 22.12+ (or a Vite-supported Node.js version) and npm.
+## Original Figma assets
+
+Run this PowerShell script from the project root to download the image and SVG assets that were extracted from the Figma source:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\download-figma-assets.ps1
+```
+
+The script places files in `public/assets/figma/`. Figma asset links are temporary and may expire; the script reports any files it cannot download.
+
+## Getting started
+
+Requirements: Node.js 22.12+ (or another Vite-supported version) and npm.
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Scripts
+## Verification commands
 
 ```bash
 npm test
@@ -57,39 +57,57 @@ npm run build
 npm run preview
 ```
 
-## Project Structure
+## Project structure
 
 ```text
 src/
-├── app/                         # Application routing
-├── features/links/
-│   ├── components/
-│   │   ├── CollectionModal.jsx
-│   │   ├── LinkCard.jsx
-│   │   └── LinkModal.jsx
-│   ├── services/                # Prepared API service layer
-│   ├── store/                   # Zustand state and local persistence
-│   ├── utils/                   # Search, sorting, and display helpers
-│   └── validation/              # Yup schemas
-├── lib/                         # Axios client
-├── pages/                       # Route-level pages and layout styles
-├── styles/                      # Design tokens
-├── App.jsx
-├── index.css
-└── main.jsx
+├── app/                         # App routes
+├── components/                  # Shared Figma asset icon wrapper
+├── features/
+│   ├── auth/
+│   │   ├── store/                # Demo profile session, no passwords
+│   │   └── validation/           # Login/register/reset schemas
+│   ├── links/
+│   │   ├── components/           # Bookmark cards and forms
+│   │   ├── services/             # Prepared API service
+│   │   ├── store/                # Bookmark and collection state
+│   │   ├── utils/                # Search, sorting, display helpers
+│   │   └── validation/           # Bookmark validation
+│   └── settings/
+│       ├── components/           # Appearance and layout settings
+│       └── store/                # Persisted theme and view preferences
+├── lib/                          # Axios client
+├── pages/                        # Workspace and account screens
+└── styles/                       # Design tokens
 
-docs/
-└── superpowers/plans/            # Implementation plan
-tests/                            # Node.js unit tests
+public/assets/figma/              # Downloaded original Figma assets
+scripts/                           # PowerShell asset helper
+tests/                             # Node test suites
+docs/superpowers/plans/             # Implementation plans
 ```
 
-## Data backup format
+## Tech stack
 
-Backups are JSON files containing the app name, version, export timestamp, collections, and bookmarks. Import merges records into the current vault and skips duplicate URLs.
+| Library | Role |
+|---|---|
+| React | UI components |
+| React Router DOM | Workspace and account routes |
+| Zustand | Persisted bookmark, demo-profile, and preference state |
+| Formik | Form state and submission |
+| Yup | Form validation |
+| Tailwind CSS v4 + custom CSS | Styling and responsive layouts |
+| React Icons | Interface icon fallbacks |
+| Vite | Development and production build |
+| Oxlint | Static code checks |
+| Node.js test runner | Unit tests |
 
-## Security and privacy
+## Backup format
 
-- Only HTTP and HTTPS bookmark links are accepted.
-- Imported JSON is validated before records are added.
-- No user credentials or API secrets are required for local use.
-- Do not commit real environment secrets. Use `.env.example` as the variable template.
+JSON backups contain the app name, version, export timestamp, collections, and bookmarks. Import validates each URL, merges collections by name, and skips duplicate URLs.
+
+## Important notes
+
+- Only HTTP and HTTPS bookmark URLs are accepted.
+- Demo account screens are not production authentication.
+- No passwords or API secrets are stored by the demo account flow.
+- Local browser storage is not a cloud database or multi-device sync.
