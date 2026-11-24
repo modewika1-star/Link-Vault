@@ -16,7 +16,7 @@ export default function LinkCard({ link, collection, onFavorite, onEdit, onDelet
   const [thumbnailFailed, setThumbnailFailed] = useState(false)
   const favicon = getFaviconUrl(link.url)
   const thumbnail = link.thumbnail && !thumbnailFailed ? link.thumbnail : ''
-  const imageSource = thumbnail || (favicon && !faviconFailed ? favicon : '')
+  const imageSource = favicon && !faviconFailed ? favicon : ''
 
   useEffect(() => {
     setFaviconFailed(false)
@@ -35,15 +35,7 @@ export default function LinkCard({ link, collection, onFavorite, onEdit, onDelet
       <div className="bookmark-card-top">
         <a className="bookmark-domain-icon" href={link.url} target="_blank" rel="noopener noreferrer" aria-label={`Open ${link.title}`}>
           {imageSource ? (
-            <img
-              src={imageSource}
-              alt=""
-              loading="lazy"
-              onError={() => {
-                if (thumbnail && imageSource === thumbnail) setThumbnailFailed(true)
-                else setFaviconFailed(true)
-              }}
-            />
+            <img src={imageSource} alt="" loading="lazy" onError={() => setFaviconFailed(true)} />
           ) : (
             <FiGlobe aria-hidden="true" />
           )}
