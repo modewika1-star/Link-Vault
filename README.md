@@ -1,4 +1,4 @@
-﻿# Link Vault
+# Link Vault
 
 A link management application built with React and Vite.
 
@@ -10,9 +10,9 @@ A link management application built with React and Vite.
 | React DOM | Renders the React application |
 | React Router DOM | Handles client-side navigation and routes |
 | Axios | Provides a centralized HTTP client for API requests |
-| Zustand | Manages shared application state, including saved links |
+| Zustand | Manages shared application state and persisted saved links |
 | Formik | Handles form state, submission, and user input |
-| Yup | Validates link titles and URLs |
+| Yup | Validates link titles and HTTP(S) URLs |
 | Tailwind CSS | Provides utility-first styling |
 | React Icons | Supplies interface icons |
 | Vite | Runs the development server and creates production builds |
@@ -94,11 +94,13 @@ Routes are configured in `src/app/router.jsx`. Add new route components there.
 
 ### Axios
 
-The configured Axios instance is in `src/lib/axios.js`. Set `VITE_API_BASE_URL` in your local environment when an API endpoint is available.
+The configured Axios instance is in `src/lib/axios.js`. Set `VITE_API_BASE_URL` in your local environment when an API endpoint is available. The current interface uses local browser storage and does not require an API.
 
 ### Zustand
 
-The links store is in `src/features/links/store/useLinksStore.js`. It provides actions to add and remove links.
+The links store is in `src/features/links/store/useLinksStore.js`. It provides actions to add and remove links and persists the saved links in browser `localStorage`.
+
+Saved links are local to the current browser and device. They are not synchronized across accounts or devices. Clearing this site's browser storage removes the saved links.
 
 ### Formik
 
@@ -106,7 +108,7 @@ The link form in `src/features/links/components/LinkForm.jsx` uses Formik to man
 
 ### Yup
 
-The schema in `src/features/links/validation/linkSchema.js` validates link titles and URLs. It is connected to Formik.
+The schema in `src/features/links/validation/linkSchema.js` validates link titles and requires URLs to use the HTTP or HTTPS protocol.
 
 ### Tailwind CSS
 
@@ -129,7 +131,7 @@ The token file defines:
 - Layout dimensions
 - Shadows
 
-Use existing design tokens instead of introducing arbitrary repeated design values. Update this file when the approved Figma design system is available.
+Use existing design tokens instead of introducing arbitrary repeated design values. Replace starter token values with the approved Figma values during final UI implementation.
 
 ## Environment Variables
 
