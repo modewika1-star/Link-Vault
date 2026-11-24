@@ -220,10 +220,10 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
             </label>
 
             <label className="field">
-              <span>{t('Description')} <b>*</b></span>
+              <span>{t('Description')} {!link && <b>*</b>}</span>
               <textarea
                 name="description"
-                required
+                required={!link}
                 value={formik.values.description}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -236,7 +236,7 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
             </label>
 
             <label className="field">
-              <span>{t('Cover Image URL')} <b>*</b></span>
+              <span>{t('Cover Image URL')} {!link && <b>*</b>}</span>
               <input
                 name="coverImageUrl"
                 type="url"
@@ -280,7 +280,7 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
 
           <footer className="modal-footer">
             <button className="button button-secondary" type="button" onClick={onClose}>{t('Cancel')}</button>
-            <button className="button button-primary" type="submit" disabled={formik.isSubmitting || checkingLink}>
+            <button className="button button-primary" type="submit" disabled={formik.isSubmitting || checkingLink || previewLoading}>
               <FiCheck />
               {checkingLink ? t('Checking link...') : formik.isSubmitting ? t('Saving...') : t('Save Bookmark')}
             </button>
