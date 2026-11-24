@@ -91,6 +91,12 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
   const imageError = formik.touched.coverImageUrl && formik.errors.coverImageUrl
   const notesError = formik.touched.notes && formik.errors.notes
 
+  const handleUrlFieldChange = (event) => {
+    const { name } = event.target
+    formik.handleChange(event)
+    formik.setFieldTouched(name, true, false)
+  }
+
   const fetchPreview = async () => {
     const url = formik.values.url.trim()
     if (!url) {
@@ -154,7 +160,7 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
                   type="url"
                   required
                   value={formik.values.url}
-                  onChange={formik.handleChange}
+                  onChange={handleUrlFieldChange}
                   onBlur={formik.handleBlur}
                   placeholder="https://example.com/article"
                   aria-invalid={Boolean(urlError)}
@@ -242,7 +248,7 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
                 type="url"
                 required={!link}
                 value={formik.values.coverImageUrl}
-                onChange={formik.handleChange}
+                onChange={handleUrlFieldChange}
                 onBlur={formik.handleBlur}
                 placeholder="https://example.com/og-image.png"
                 aria-invalid={Boolean(imageError)}

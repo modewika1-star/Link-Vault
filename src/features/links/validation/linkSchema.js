@@ -19,8 +19,11 @@ const title = Yup.string()
 const url = Yup.string()
   .trim()
   .required('Please enter a URL')
-  .url('Please enter a valid URL')
-  .test('http-or-https', 'Only HTTP and HTTPS links are supported', isHttpUrl)
+  .test(
+    'valid-http-url',
+    'This is not a valid URL. Enter a valid URL, e.g. https://example.com.',
+    (value) => !value || isHttpUrl(value),
+  )
 
 const optionalDescription = Yup.string()
   .trim()
@@ -35,8 +38,11 @@ const optionalCoverImageUrl = Yup.string()
   .trim()
   .nullable()
   .transform((value) => value || null)
-  .url('Enter a valid image URL')
-  .test('http-or-https-image', 'Image URLs must use HTTP or HTTPS', (value) => !value || isHttpUrl(value))
+  .test(
+    'valid-http-image-url',
+    'This is not a valid image URL. Enter an image URL, e.g. https://example.com/image.png.',
+    (value) => !value || isHttpUrl(value),
+  )
 
 const requiredCoverImageUrl = optionalCoverImageUrl.required('Please add a cover image URL')
 

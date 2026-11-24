@@ -2117,3 +2117,32 @@
   border-color:var(--lv-color-a92c39);
   background:var(--lv-color-282517);
 }
+
+
+/* Keep brand and primary actions recognizable against the dark workspace. */
+.app-shell[data-theme="dark"] .brand-mark {
+  background:var(--lv-color-20366c);
+  color:var(--lv-color-fff);
+}
+
+.app-shell[data-theme="dark"] .button-primary {
+  border-color:var(--lv-color-20366c);
+  background:var(--lv-color-20366c);
+  color:var(--lv-color-fff) !important;
+}
+
+.app-shell[data-theme="dark"] .button-primary:hover:not(:disabled) {
+  border-color:var(--lv-color-405dcb);
+  background:var(--lv-color-405dcb);
+}
+
+.app-shell[data-theme="dark"] .add-bookmark-button {
+  border-color:var(--lv-color-20366c);
+  background:var(--lv-color-20366c);
+  color:var(--lv-color-fff) !important;
+}
+
+.app-shell[data-theme="dark"] .add-bookmark-button:hover:not(:disabled) {
+  border-color:var(--lv-color-405dcb);
+  background:var(--lv-color-405dcb);
+}

@@ -54,3 +54,24 @@ test('allows older bookmarks without optional description and cover image to be 
     coverImageUrl: '',
   }))
 })
+
+test('shows a clear URL hint for arbitrary text in the bookmark URL field', async () => {
+  await assert.rejects(
+    () => linkSchema.validate({ ...base, url: 'random nonsense' }),
+    /This is not a valid URL\. Enter a valid URL, e\.g\. https:\/\/example\.com\./,
+  )
+})
+
+test('shows a clear URL hint for unsupported protocols', async () => {
+  await assert.rejects(
+    () => linkSchema.validate({ ...base, url: 'ftp://example.com/file' }),
+    /This is not a valid URL/,
+  )
+})
+
+test('shows an image URL hint for arbitrary text in the cover image field', async () => {
+  await assert.rejects(
+    () => linkSchema.validate({ ...base, coverImageUrl: 'just some words' }),
+    /This is not a valid image URL/,
+  )
+})
