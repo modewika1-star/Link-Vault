@@ -329,7 +329,7 @@ export default function HomePage() {
             {query && (
               <button type="button" onClick={() => setQuery('')} aria-label="Clear search" className="search-clear"><FiX /></button>
             )}
-            <kbd>⌘ K</kbd>
+            <kbd>Ctrl K</kbd>
           </label>
 
           <div className="topbar-actions">
