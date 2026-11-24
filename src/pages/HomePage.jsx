@@ -5,9 +5,7 @@ import {
   FiChevronDown,
   FiCloud,
   FiDownload,
-  FiFilePlus,
   FiFolder,
-  FiFolderPlus,
   FiHeart,
   FiHardDrive,
   FiMenu,
@@ -58,6 +56,7 @@ export default function HomePage() {
   const [toast, setToast] = useState('')
   const toastTimer = useRef(null)
   const importInput = useRef(null)
+  const searchInput = useRef(null)
 
   const activeCollection = collections.find((item) => item.id === activeCollectionId) || null
   const visibleLinks = useMemo(
@@ -84,6 +83,17 @@ export default function HomePage() {
 
   useEffect(() => () => {
     if (toastTimer.current) window.clearTimeout(toastTimer.current)
+  }, [])
+
+  useEffect(() => {
+    const handleSearchShortcut = (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault()
+        searchInput.current?.focus()
+      }
+    }
+    window.addEventListener('keydown', handleSearchShortcut)
+    return () => window.removeEventListener('keydown', handleSearchShortcut)
   }, [])
 
   useEffect(() => {
@@ -309,6 +319,7 @@ export default function HomePage() {
           <label className="search-box">
             <FiSearch />
             <input
+              ref={searchInput}
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
