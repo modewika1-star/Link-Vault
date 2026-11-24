@@ -2146,3 +2146,7 @@
   border-color:var(--lv-color-405dcb);
   background:var(--lv-color-405dcb);
 }
+
+.app-shell[data-theme="dark"] .field-error {
+  color:var(--lv-color-f18c94) !important;
+}
