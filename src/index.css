@@ -9,3 +9,5 @@ button{-webkit-tap-highlight-color:transparent}
 a{color:inherit;text-decoration:none}
 ::selection{color:white;background:#455da7}
 :focus-visible{outline:3px solid rgb(100 127 233 / 35%);outline-offset:2px}
+
+.app-locale-root{min-height:100vh}
