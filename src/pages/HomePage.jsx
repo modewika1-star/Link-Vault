@@ -7,6 +7,7 @@ import {
   FiCloud,
   FiDownload,
   FiFolder,
+  FiExternalLink,
   FiGrid,
   FiHeart,
   FiList,
@@ -240,6 +241,11 @@ export default function HomePage() {
     ? `${visibleLinks.length} result${visibleLinks.length === 1 ? '' : 's'}`
     : `${visibleLinks.length} bookmark${visibleLinks.length === 1 ? '' : 's'}`
 
+  const openAllLinks = () => {
+    visibleLinks.forEach((link) => window.open(link.url, '_blank', 'noopener,noreferrer'))
+    notify(`Requested opening ${visibleLinks.length} link(s) in new tabs.`)
+  }
+
   return (
     <div className="app-shell" data-theme={theme}>
       <button
@@ -404,23 +410,20 @@ export default function HomePage() {
             </div>
 
             <button className="button button-primary add-bookmark-button" type="button" onClick={openNewLink}>
-              <FiPlus /> <span>Add Bookmark</span>
+              <FiPlus /> <span>Add Link</span>
             </button>
           </div>
         </header>
 
         <div className="page-content">
           <div className="page-heading-row">
-            <div>
-              <div className="page-eyebrow">YOUR LIBRARY</div>
+            <div className="page-heading-copy">
               <h1>{pageTitle}</h1>
-              <p>{pageDescription}</p>
+              <p>{headingCount}</p>
             </div>
-            <div className="page-heading-meta">
-              <span className="bookmark-total">{headingCount}</span>
-              <span className="heading-divider" />
-              <span className="sort-description">Sorted by {sortOptions.find((item) => item.value === sort)?.label}</span>
-            </div>
+            <button className="open-all-button" type="button" onClick={openAllLinks} disabled={!visibleLinks.length}>
+              <FiExternalLink /> Open All
+            </button>
           </div>
 
           {visibleLinks.length === 0 ? (
@@ -432,12 +435,12 @@ export default function HomePage() {
                   ? 'Try another search term or clear your search.'
                   : view === 'favorites'
                     ? 'Tap the star on any bookmark to keep it close.'
-                    : 'Add your first bookmark and start building your personal library.'}
+                    : 'Add your first link and start building your personal library.'}
               </p>
               {query ? (
                 <button className="button button-secondary" type="button" onClick={() => setQuery('')}>Clear search</button>
               ) : (
-                <button className="button button-primary" type="button" onClick={openNewLink}><FiPlus /> Add bookmark</button>
+                <button className="button button-primary" type="button" onClick={openNewLink}><FiPlus /> Add Link</button>
               )}
             </section>
           ) : (
