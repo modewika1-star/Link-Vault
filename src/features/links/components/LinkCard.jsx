@@ -7,8 +7,10 @@ import {
   FiGlobe,
   FiBookmark,
 } from 'react-icons/fi'
+import { useTranslation } from '../../../i18n/translations.js'
 
 export default function LinkCard({ link, collection, onFavorite, onEdit, onDelete }) {
+  const { t } = useTranslation()
   const [imageFailed, setImageFailed] = useState(false)
   const imageUrl = link.coverImageUrl || link.thumbnail || ''
   const description = link.description || link.notes || ''
@@ -31,7 +33,7 @@ export default function LinkCard({ link, collection, onFavorite, onEdit, onDelet
         href={link.url}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`Open ${link.title}`}
+        aria-label={t('Open {title}', { title: link.title })}
       >
         {imageUrl && !imageFailed ? (
           <img src={imageUrl} alt="" loading="lazy" onError={() => setImageFailed(true)} />
@@ -49,7 +51,7 @@ export default function LinkCard({ link, collection, onFavorite, onEdit, onDelet
               {collection.name}
             </span>
           ) : (
-            <span className="collection-tag is-muted">Uncategorized</span>
+            <span className="collection-tag is-muted">{t('Uncategorized')}</span>
           )}
         </div>
         <h3 className="bookmark-title">
@@ -59,26 +61,26 @@ export default function LinkCard({ link, collection, onFavorite, onEdit, onDelet
           </a>
         </h3>
         <p className={description ? 'bookmark-description' : 'bookmark-description is-empty'}>
-          {description || 'No description added yet.'}
+          {description || t('No description added yet.')}
         </p>
       </div>
 
       <footer className="bookmark-card-footer">
-        <div className="bookmark-card-actions" aria-label={`Actions for ${link.title}`}>
+        <div className="bookmark-card-actions" aria-label={t('Actions for {title}', { title: link.title })}>
           <button
             type="button"
             className={link.favorite ? 'bookmark-action favorite-active' : 'bookmark-action'}
             onClick={() => onFavorite(link.id)}
-            aria-label={link.favorite ? 'Remove from favorites' : 'Add to favorites'}
+            aria-label={t(link.favorite ? 'Remove from favorites' : 'Add to favorites')}
             aria-pressed={link.favorite}
-            title={link.favorite ? 'Remove from favorites' : 'Add to favorites'}
+            title={t(link.favorite ? 'Remove from favorites' : 'Add to favorites')}
           >
             <FiStar />
           </button>
-          <button className="bookmark-action" type="button" onClick={() => onEdit(link)} aria-label={`Edit ${link.title}`} title="Edit bookmark">
+          <button className="bookmark-action" type="button" onClick={() => onEdit(link)} aria-label={t('Edit {title}', { title: link.title })} title={t('Edit bookmark')}>
             <FiEdit2 />
           </button>
-          <button className="bookmark-action delete-action" type="button" onClick={() => onDelete(link)} aria-label={`Delete ${link.title}`} title="Delete bookmark">
+          <button className="bookmark-action delete-action" type="button" onClick={() => onDelete(link)} aria-label={t('Delete {title}', { title: link.title })} title="Delete bookmark">
             <FiTrash2 />
           </button>
         </div>

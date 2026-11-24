@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import { FiCheck, FiX } from 'react-icons/fi'
 import linkSchema from '../validation/linkSchema'
+import { useTranslation } from '../../../i18n/translations.js'
 
 const emptyValues = {
   title: '',
@@ -14,6 +15,7 @@ const emptyValues = {
 }
 
 export default function LinkModal({ open, link, collections, onClose, onSave }) {
+  const { t } = useTranslation()
   const [previewLoading, setPreviewLoading] = useState(false)
   const formik = useFormik({
     initialValues: link
@@ -111,8 +113,8 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
     >
       <section className="modal-panel link-modal-panel" role="dialog" aria-modal="true" aria-labelledby="link-modal-title">
         <header className="modal-header link-modal-header">
-          <h2 id="link-modal-title">{link ? 'Edit Bookmark' : 'Add Bookmark'}</h2>
-          <button className="icon-button subtle" type="button" onClick={onClose} aria-label="Close dialog">
+          <h2 id="link-modal-title">{link ? t('Edit Bookmark') : t('Add Bookmark')}</h2>
+          <button className="icon-button subtle" type="button" onClick={onClose} aria-label={t('Close dialog')}>
             <FiX />
           </button>
         </header>
@@ -120,7 +122,7 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
         <form onSubmit={formik.handleSubmit} noValidate>
           <div className="modal-body link-modal-body">
             <label className="field">
-              <span>URL <b>*</b></span>
+              <span>{t('URL')} <b>*</b></span>
               <div className="url-preview-row">
                 <input
                   autoFocus
@@ -171,44 +173,44 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
                       stroke="#FE9A00"
                     />
                   </svg>
-                  {previewLoading ? 'Fetching...' : 'Fetch Preview'}
+                  {previewLoading ? t('Fetching...') : t('Fetch Preview')}
                 </button>
               </div>
-              {urlError && <small className="field-error">{urlError}</small>}
-              {formik.status && <small className="preview-status" role="status">{formik.status}</small>}
+              {urlError && <small className="field-error">{t(urlError)}</small>}
+              {formik.status && <small className="preview-status" role="status">{t(formik.status)}</small>}
             </label>
 
             <label className="field">
-              <span>Title <b>*</b></span>
+              <span>{t('Title')} <b>*</b></span>
               <input
                 name="title"
                 value={formik.values.title}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                placeholder="Page title"
+                placeholder={t('Page title')}
                 maxLength={80}
                 aria-invalid={Boolean(titleError)}
               />
-              {titleError && <small className="field-error">{titleError}</small>}
+              {titleError && <small className="field-error">{t(titleError)}</small>}
             </label>
 
             <label className="field">
-              <span>Description</span>
+              <span>{t('Description')}</span>
               <textarea
                 name="description"
                 value={formik.values.description}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                placeholder="Short summary..."
+                placeholder={t('Short summary...')}
                 rows={2}
                 maxLength={500}
                 aria-invalid={Boolean(descriptionError)}
               />
-              {descriptionError && <small className="field-error">{descriptionError}</small>}
+              {descriptionError && <small className="field-error">{t(descriptionError)}</small>}
             </label>
 
             <label className="field">
-              <span>Cover Image URL</span>
+              <span>{t('Cover Image URL')}</span>
               <input
                 name="coverImageUrl"
                 type="url"
@@ -218,13 +220,13 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
                 placeholder="https://example.com/og-image.png"
                 aria-invalid={Boolean(imageError)}
               />
-              {imageError && <small className="field-error">{imageError}</small>}
+              {imageError && <small className="field-error">{t(imageError)}</small>}
             </label>
 
             <label className="field">
-              <span>Collection</span>
+              <span>{t('Collection')}</span>
               <select name="collectionId" value={formik.values.collectionId} onChange={formik.handleChange}>
-                <option value="">No collection</option>
+                <option value="">{t('No collection')}</option>
                 {collections.map((item) => (
                   <option value={item.id} key={item.id}>{item.name}</option>
                 ))}
@@ -232,28 +234,28 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
             </label>
 
             <label className="field">
-              <span>Notes</span>
+              <span>{t('Notes')}</span>
               <textarea
                 name="notes"
                 value={formik.values.notes}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                placeholder="Personal notes or key takeaways..."
+                placeholder={t('Personal notes or key takeaways...')}
                 rows={2}
                 maxLength={2000}
               />
               <span className="field-foot">
-                {notesError ? <small className="field-error">{notesError}</small> : <small>Optional</small>}
+                {notesError ? <small className="field-error">{t(notesError)}</small> : <small>{t('Optional')}</small>}
                 <small>{formik.values.notes.length}/2,000</small>
               </span>
             </label>
           </div>
 
           <footer className="modal-footer">
-            <button className="button button-secondary" type="button" onClick={onClose}>Cancel</button>
+            <button className="button button-secondary" type="button" onClick={onClose}>{t('Cancel')}</button>
             <button className="button button-primary" type="submit" disabled={formik.isSubmitting}>
               <FiCheck />
-              {formik.isSubmitting ? 'Saving...' : link ? 'Save Bookmark' : 'Save Bookmark'}
+              {formik.isSubmitting ? t('Saving...') : link ? t('Save Bookmark') : t('Save Bookmark')}
             </button>
           </footer>
         </form>

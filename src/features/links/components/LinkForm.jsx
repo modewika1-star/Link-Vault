@@ -1,11 +1,13 @@
 ﻿import { useFormik } from 'formik'
 import { FiPlus } from 'react-icons/fi'
 import linkSchema from '../validation/linkSchema'
+import { useTranslation } from '../../../i18n/translations.js'
 
 const fieldClass =
   'w-full rounded-control border border-line bg-surface px-4 py-3 text-sm text-ink outline-none transition focus:border-brand'
 
 export default function LinkForm({ onAdd }) {
+  const { t } = useTranslation()
   const formik = useFormik({
     initialValues: {
       title: '',
@@ -31,23 +33,23 @@ export default function LinkForm({ onAdd }) {
     >
       <div>
         <label htmlFor="title" className="mb-2 block text-sm font-medium">
-          Link title
+          {t('Link title')}
         </label>
         <input
           id="title"
           type="text"
-          placeholder="My favorite website"
+          placeholder={t('My favorite website')}
           className={fieldClass}
           {...formik.getFieldProps('title')}
         />
         {formik.touched.title && formik.errors.title && (
-          <p className="mt-1 text-xs text-danger">{formik.errors.title}</p>
+          <p className="mt-1 text-xs text-danger">{t(formik.errors.title)}</p>
         )}
       </div>
 
       <div>
         <label htmlFor="url" className="mb-2 block text-sm font-medium">
-          Website URL
+          {t('Website URL')}
         </label>
         <input
           id="url"
@@ -57,7 +59,7 @@ export default function LinkForm({ onAdd }) {
           {...formik.getFieldProps('url')}
         />
         {formik.touched.url && formik.errors.url && (
-          <p className="mt-1 text-xs text-danger">{formik.errors.url}</p>
+          <p className="mt-1 text-xs text-danger">{t(formik.errors.url)}</p>
         )}
       </div>
 
@@ -67,7 +69,7 @@ export default function LinkForm({ onAdd }) {
           className="flex w-full items-center justify-center gap-2 rounded-control bg-brand px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-hover sm:w-auto"
         >
           <FiPlus aria-hidden="true" />
-          Add link
+          {t('Add link')}
         </button>
       </div>
     </form>

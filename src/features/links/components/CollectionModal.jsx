@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { FiFolderPlus, FiX } from 'react-icons/fi'
+import { useTranslation } from '../../../i18n/translations.js'
 
 const colors = ['#647fe9', '#9b70db', '#e2a34b', '#2eaa87', '#e47787', '#4c9ab8']
 
 export default function CollectionModal({ open, onClose, onSave }) {
+  const { t } = useTranslation()
   const [name, setName] = useState('')
   const [color, setColor] = useState(colors[0])
   const [error, setError] = useState('')
@@ -43,28 +45,28 @@ export default function CollectionModal({ open, onClose, onSave }) {
         <header className="modal-header">
           <div className="modal-heading-icon"><FiFolderPlus /></div>
           <div className="modal-heading-copy">
-            <h2 id="collection-modal-title">Create a collection</h2>
-            <p>Group related bookmarks so they are easy to find.</p>
+            <h2 id="collection-modal-title">{t('Create a collection')}</h2>
+            <p>{t('Group related bookmarks so they are easy to find.')}</p>
           </div>
-          <button className="icon-button subtle" type="button" onClick={onClose} aria-label="Close dialog"><FiX /></button>
+          <button className="icon-button subtle" type="button" onClick={onClose} aria-label={t('Close dialog')}><FiX /></button>
         </header>
 
         <form onSubmit={submit}>
           <div className="modal-body">
             <label className="field">
-              <span>Collection name <b>*</b></span>
+              <span>{t('Collection name')} <b>*</b></span>
               <input
                 autoFocus
                 value={name}
                 onChange={(event) => { setName(event.target.value); setError('') }}
-                placeholder="e.g. Design inspiration"
+                placeholder={t('e.g. Design inspiration')}
                 maxLength={32}
               />
-              {error && <small className="field-error">{error}</small>}
+              {error && <small className="field-error">{t(error)}</small>}
             </label>
             <div className="field">
-              <span>Choose a color</span>
-              <div className="color-picker" role="group" aria-label="Collection color">
+              <span>{t('Choose a color')}</span>
+              <div className="color-picker" role="group" aria-label={t('Collection color')}>
                 {colors.map((item) => (
                   <button
                     key={item}
@@ -80,8 +82,8 @@ export default function CollectionModal({ open, onClose, onSave }) {
             </div>
           </div>
           <footer className="modal-footer">
-            <button className="button button-secondary" type="button" onClick={onClose}>Cancel</button>
-            <button className="button button-primary" type="submit"><FiFolderPlus /> Create collection</button>
+            <button className="button button-secondary" type="button" onClick={onClose}>{t('Cancel')}</button>
+            <button className="button button-primary" type="submit"><FiFolderPlus /> {t('Create collection')}</button>
           </footer>
         </form>
       </section>
