@@ -312,3 +312,11 @@
 .nav-item-label .figma-icon{width:16px;height:16px}
 .new-collection-button .figma-icon{width:14px;height:14px;flex-basis:14px}
 .search-box>.figma-icon{width:16px;height:16px;flex:0 0 16px}
+
+.bookmark-card-image{display:block;width:100%;height:112px;overflow:hidden;border:1px solid var(--lv-line-soft);border-radius:8px;background:var(--lv-canvas)}
+.bookmark-card-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.bookmark-card-image:hover img{transform:scale(1.015)}
+.bookmark-card-image img{transition:transform 180ms ease}
+.bookmark-grid.is-list .bookmark-card-image{display:none}
+.app-shell[data-theme="dark"] .bookmark-card-image{background:#0e192b}
+@media(max-width:760px){.bookmark-card-image{height:100px}}
