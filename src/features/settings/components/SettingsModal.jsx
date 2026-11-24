@@ -5,7 +5,8 @@ import {
   FiArrowLeft, FiLayers, FiSearch, FiLink2, FiSave,
 } from 'react-icons/fi'
 import './SettingsModal.css'
-import { useText } from '../../../lib/text.js'
+import { formatText } from '../../../lib/text.js'
+import { COLLECTION_COLORS } from '../../links/constants/collectionColors.js'
 
 export default function SettingsModal({
   open,
@@ -24,7 +25,7 @@ export default function SettingsModal({
   onCreateCollection,
   onSetCollectionLinks,
 }) {
-  const { t } = useText()
+  const t = formatText
   const [section, setSection] = useState('home')
   const [search, setSearch] = useState('')
   const [selectedLinks, setSelectedLinks] = useState([])
@@ -124,7 +125,7 @@ export default function SettingsModal({
 
   const createCollection = (event) => {
     event.preventDefault()
-    const result = onCreateCollection?.(newCollectionName, '#9b70db')
+    const result = onCreateCollection?.(newCollectionName, COLLECTION_COLORS[1])
     if (result?.error) {
       setNotice(result.error)
       return

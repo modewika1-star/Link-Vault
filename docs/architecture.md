@@ -1,23 +1,31 @@
-﻿# Architecture Notes
+# Project architecture
 
-## Feature organization
+## Application entry
 
-Feature-specific code belongs inside `src/features/<feature-name>/`.
+- `src/main.jsx` mounts the React application.
+- `src/app/router.jsx` defines the workspace and account routes.
+- `src/pages/` contains page-level components.
 
-The links feature owns its components, services, state, hooks, and validation rules. This keeps related functionality together and makes future features easier to add.
+## Features
+
+Feature code stays together under `src/features/`:
+
+- `auth/` stores the demo profile and account validation schemas.
+- `links/` owns bookmark and collection dialogs, cards, state, and validation.
+- `settings/` owns the theme and layout preferences.
 
 ## Shared code
 
-- `src/components/`: reusable interface components
-- `src/hooks/`: shared React hooks
-- `src/lib/`: configured external libraries
-- `src/stores/`: state shared across multiple features
-- `src/utils/`: reusable utility functions
-- `src/styles/`: global styles and design tokens
+- `src/components/` contains UI pieces shared across pages.
+- `src/lib/` contains the Axios client and small text-formatting helper.
+- `src/styles/design-tokens.css` is the source of truth for the visual system.
 
-## Design token rules
+## State and data
 
-1. Define shared design values in `src/styles/design-tokens.css`.
-2. Prefer semantic tokens such as `brand`, `surface`, and `ink`.
-3. Avoid repeating raw color, spacing, radius, and shadow values in components.
-4. Replace starter token values with approved Figma values before final UI implementation.
+Zustand stores bookmarks, collections, the demo session, and appearance preferences. Persisted state uses localStorage, so data stays in the current browser. Account screens are a UI preview and are not connected to an authentication provider.
+
+The bookmark preview action calls Microlink through Axios to read public page metadata. No bookmark API or server-side database is currently connected.
+
+## Styling
+
+Tailwind CSS v4 is loaded through the Vite plugin. The existing Figma-matched layouts use component CSS, with colors, sizing, spacing, typography, radii, and shadows shared through the central design-token file. New styles should use those tokens rather than adding one-off values.

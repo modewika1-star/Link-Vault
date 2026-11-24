@@ -1,114 +1,91 @@
 # LinkVault
 
-A responsive bookmark manager based on the inspected Figma **Desktop Light mode** frame. Built with React, Vite, Zustand, Formik, Yup, Tailwind CSS, and custom CSS.
+LinkVault is a responsive bookmark manager built with React and Vite. It keeps links, notes, favorites, and collections in the browser, with a clean desktop and mobile workspace.
 
-## Workspace features
+## Features
 
 - Add, edit, and delete bookmarks.
-- Save notes and assign bookmarks to collections.
-- Favorite bookmarks and filter by Favorites.
-- Create, rename, and delete collections.
-- Search titles, URLs, and notes.
-- Sort by newest, oldest, title A–Z, and title Z–A.
-- Switch between grid and list layouts.
-- Switch between light and dark appearance.
-- Open Settings to manage bookmarks and collections, including multi-select deletion, inline renaming, and assigning multiple bookmarks to a collection.
-- Open Settings to change and persist appearance and layout preferences.
-- Import and export a JSON backup for bookmarks and collections.
-- Original Figma SVG icons and project images, with graceful icon/favicon fallbacks.
-- Responsive desktop, tablet, and mobile layout.
+- Save descriptions and personal notes.
+- Organize bookmarks into named, color-coded collections.
+- Mark favorites, search saved content, and sort by date or title.
+- Switch between grid and list views.
+- Switch between light and dark themes.
+- Fetch a page title, description, and cover image when a public preview is available.
+- Manage bookmarks and collections from Settings.
+- Use the demo sign-in, registration, and password recovery screens to preview the account UI.
 
-## Demo account screens
+> Account screens are a front-end demo. No real account, password, email verification, or social sign-in is created. Bookmarks and preferences are saved only in the current browser.
 
-The app includes Figma-styled sign-in, registration, password recovery, six-digit verification, password reset, and sign-out flows. These screens validate email shape, password length, terms acceptance, and confirmation fields. A successful sign-in/register stores only a demo profile (name and email) in browser storage. **No password is stored, no real authentication provider is connected, and no reset email is sent.**
+## Run locally
 
-Any syntactically valid email and password meeting the form rules can be used to preview the demo flow. The verification screen accepts the demo code `123456`. Google and GitHub buttons are visual previews only.
-
-## Data and privacy
-
-Bookmarks, collections, theme preferences, and the demo profile are stored in the current browser's localStorage. They are not synchronized between devices or browsers. Use **Export backup** and **Import backup** to move bookmark data.
-
-The initial workspace contains the seven bookmarks and three collections shown in the Figma reference. React, Tailwind CSS, and Hugging Face use original project artwork; remaining cards use the matching Figma placeholder treatment.
-
-## Original Figma assets
-
-Run this PowerShell script from the project root to download the image and SVG assets that were extracted from the Figma source:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\download-figma-assets.ps1
-```
-
-The script places files in `public/assets/figma/`. Figma asset links are temporary and may expire; the script reports any files it cannot download.
-
-## Getting started
-
-Requirements: Node.js 22.12+ (or another Vite-supported version) and npm.
+Use Node.js 22.12 or later and npm.
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-## Verification commands
+Open the local URL printed by Vite. To check the project before sharing it:
 
 ```bash
 npm test
 npm run lint
 npm run build
-npm run preview
 ```
+
+## Libraries used in this project
+
+| Library | How LinkVault uses it |
+|---|---|
+| `react` and `react-dom` | Build the workspace, bookmark cards, dialogs, and account screens. |
+| `react-router-dom` | Navigate between the workspace, sign-in, registration, password recovery, and not-found screens. |
+| `zustand` | Hold bookmarks, collections, demo session state, and user preferences. The persist middleware saves the relevant state in localStorage. |
+| `formik` | Manage the bookmark, collection, and account forms, including field state and submission. |
+| `yup` | Validate URLs, required fields, email addresses, and password rules before forms are submitted. |
+| `axios` | Request public page metadata from the Microlink preview endpoint when the user chooses Fetch Preview. |
+| `tailwindcss` and `@tailwindcss/vite` | Load Tailwind CSS v4 in the Vite build. Utility classes are available alongside the project's component styles. |
+| `react-icons` | Provide interface icons and fallbacks when an original Figma SVG cannot load. |
+| `vite` and `@vitejs/plugin-react` | Run the local development server and build the React application. |
+| `oxlint` | Check JavaScript and React code for common issues. |
+| Node.js test runner | Run the unit tests in the `tests/` folder without an extra test framework. |
 
 ## Project structure
 
 ```text
 src/
-├── app/                         # App routes
-├── components/                  # Shared Figma asset icon wrapper
+├── app/                       # Route definitions
+├── components/                # Shared interface components
 ├── features/
-│   ├── auth/
-│   │   ├── store/                # Demo profile session, no passwords
-│   │   └── validation/           # Login/register/reset schemas
-│   ├── links/
-│   │   ├── components/           # Bookmark cards and forms
-│   │   ├── services/             # Prepared API service
-│   │   ├── store/                # Bookmark and collection state
-│   │   ├── utils/                # Search, sorting, display helpers
-│   │   └── validation/           # Bookmark validation
-│   └── settings/
-│       ├── components/           # Appearance and layout settings
-│       └── store/                # Persisted theme and view preferences
-├── lib/                          # Axios client
-├── pages/                        # Workspace and account screens
-└── styles/                       # Design tokens
+│   ├── auth/                  # Demo account state and validation
+│   ├── links/                 # Bookmark and collection UI, state, and validation
+│   └── settings/              # Theme and layout preferences
+├── lib/                       # Configured Axios client and text formatting helper
+├── pages/                     # Workspace and account pages
+└── styles/                    # Shared design tokens
 
-public/assets/figma/              # Downloaded original Figma assets
-scripts/                           # PowerShell asset helper
-tests/                             # Node test suites
-docs/superpowers/plans/             # Implementation plans
+public/assets/figma/           # Original interface icons and sample artwork
+tests/                         # Unit tests
+scripts/                       # Optional Figma asset download helper
 ```
 
-## Tech stack
+## Design system
 
-| Library | Role |
-|---|---|
-| React | UI components |
-| React Router DOM | Workspace and account routes |
-| Zustand | Persisted bookmark, demo-profile, and preference state |
-| Formik | Form state and submission |
-| Yup | Form validation |
-| Tailwind CSS v4 + custom CSS | Styling and responsive layouts |
-| React Icons | Interface icon fallbacks |
-| Vite | Development and production build |
-| Oxlint | Static code checks |
-| Node.js test runner | Unit tests |
+Shared colors, spacing, sizing, typography, border radii, and shadows are defined in `src/styles/design-tokens.css`. Component styles should use those variables instead of introducing new one-off visual values. The same file exposes the core colors, type, spacing, radius, and shadow tokens to Tailwind through `@theme inline`.
 
-## Backup format
+## Data and privacy
 
-JSON backups contain the app name, version, export timestamp, collections, and bookmarks. Import validates each URL, merges collections by name, and skips duplicate URLs.
+Bookmarks, collections, theme preferences, and the demo profile are stored in the current browser's localStorage. They are not synchronized between browsers or devices. The page-preview request sends the URL entered by the user to the Microlink service to retrieve public metadata.
 
-## Important notes
+The initial workspace includes sample links and collections so the interface is populated on first launch. Users can remove or edit these examples in the workspace.
+
+## GitHub
+
+Repository: https://github.com/modewika1-star/Link-Vault
+
+The repository is public. Install dependencies with `npm ci`; the `node_modules/` directory and local environment files are excluded by `.gitignore`.
+
+## Notes
 
 - Only HTTP and HTTPS bookmark URLs are accepted.
-- Demo account screens are not production authentication.
-- No passwords or API secrets are stored by the demo account flow.
-- Local browser storage is not a cloud database or multi-device sync.
+- The demo account screens do not provide production authentication.
+- No API server or cloud database is connected to bookmark storage.

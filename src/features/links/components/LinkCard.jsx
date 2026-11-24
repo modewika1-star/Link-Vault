@@ -7,10 +7,10 @@ import {
   FiGlobe,
   FiBookmark,
 } from 'react-icons/fi'
-import { useText } from '../../../lib/text.js'
+import { formatText } from '../../../lib/text.js'
 
 export default function LinkCard({ link, collection, onFavorite, onEdit, onDelete }) {
-  const { t } = useText()
+  const t = formatText
   const [imageFailed, setImageFailed] = useState(false)
   const imageUrl = link.coverImageUrl || link.thumbnail || ''
   const description = link.description || link.notes || ''

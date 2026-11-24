@@ -1,10 +1,11 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
+import { COLLECTION_COLORS } from '../constants/collectionColors.js'
 
 const defaultCollections = [
-  { id: 'col-frontend', name: 'Frontend & React', color: '#647fe9', createdAt: '2026-11-18T09:00:00.000Z' },
-  { id: 'col-ai', name: 'AI & Tools', color: '#9b70db', createdAt: '2026-11-19T09:00:00.000Z' },
-  { id: 'col-reading', name: 'Reading List', color: '#e2a34b', createdAt: '2026-11-20T09:00:00.000Z' },
+  { id: 'col-frontend', name: 'Frontend & React', color: COLLECTION_COLORS[0], createdAt: '2026-11-18T09:00:00.000Z' },
+  { id: 'col-ai', name: 'AI & Tools', color: COLLECTION_COLORS[1], createdAt: '2026-11-19T09:00:00.000Z' },
+  { id: 'col-reading', name: 'Reading List', color: COLLECTION_COLORS[2], createdAt: '2026-11-20T09:00:00.000Z' },
 ]
 
 const demoLinks = [
@@ -215,7 +216,7 @@ const useLinksStore = create(
           ),
         })),
 
-      addCollection: (name, color = '#647fe9') => {
+      addCollection: (name, color = COLLECTION_COLORS[0]) => {
         const normalized = normalizeName(name)
         if (!normalized) return { error: 'Enter a collection name.' }
         if (get().collections.some((item) => normalizeName(item.name) === normalized)) {
@@ -239,14 +240,6 @@ const useLinksStore = create(
         }))
         return { success: true }
       },
-
-      deleteCollection: (id) =>
-        set((state) => ({
-          collections: state.collections.filter((item) => item.id !== id),
-          links: state.links.map((link) =>
-            link.collectionId === id ? { ...link, collectionId: null } : link,
-          ),
-        })),
 
       deleteCollections: (ids) => {
         const selected = new Set(ids)

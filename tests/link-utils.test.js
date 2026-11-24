@@ -3,7 +3,6 @@ import assert from 'node:assert/strict'
 import {
   filterAndSortLinks,
   getCollectionCount,
-  getFaviconUrl,
 } from '../src/features/links/utils/linkUtils.js'
 
 const links = [
@@ -79,7 +78,3 @@ test('collection counts are calculated from the current links', () => {
   assert.equal(getCollectionCount(links, 'missing'), 0)
 })
 
-test('favicon URL is generated only for valid absolute URLs', () => {
-  assert.match(getFaviconUrl('https://react.dev'), /react.dev/)
-  assert.equal(getFaviconUrl('not a url'), '')
-})

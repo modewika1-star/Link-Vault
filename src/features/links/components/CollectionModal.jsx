@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { FiFolderPlus, FiX } from 'react-icons/fi'
-import { useText } from '../../../lib/text.js'
+import { formatText } from '../../../lib/text.js'
 
-const colors = ['#647fe9', '#9b70db', '#e2a34b', '#2eaa87', '#e47787', '#4c9ab8']
+import { COLLECTION_COLORS as colors } from '../constants/collectionColors.js'
 
 export default function CollectionModal({ open, onClose, onSave }) {
-  const { t } = useText()
+  const t = formatText
   const [name, setName] = useState('')
   const [color, setColor] = useState(colors[0])
   const [error, setError] = useState('')

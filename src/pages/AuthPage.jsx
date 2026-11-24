@@ -16,7 +16,7 @@ import {
 } from '../features/auth/validation/authSchemas.js'
 import useDemoAuthStore from '../features/auth/store/useDemoAuthStore.js'
 import './AuthPage.css'
-import { useText } from '../lib/text.js'
+import { formatText } from '../lib/text.js'
 
 const pageConfig = {
   register: {
@@ -53,7 +53,7 @@ const pageConfig = {
 
 export default function AuthPage({ mode = 'login' }) {
   const navigate = useNavigate()
-  const { t } = useText()
+  const t = formatText
   const location = useLocation()
   const signIn = useDemoAuthStore((state) => state.signIn)
   const register = useDemoAuthStore((state) => state.register)

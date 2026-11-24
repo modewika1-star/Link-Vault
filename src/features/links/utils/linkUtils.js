@@ -41,36 +41,3 @@ export function filterAndSortLinks(links, options = {}) {
 export function getCollectionCount(links, collectionId) {
   return links.filter((link) => link.collectionId === collectionId).length
 }
-
-export function getFaviconUrl(value) {
-  try {
-    const hostname = new URL(value).hostname
-    return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(hostname)}&sz=64`
-  } catch {
-    return ''
-  }
-}
-
-export function formatRelativeDate(value) {
-  const timestamp = new Date(value).getTime()
-  if (!Number.isFinite(timestamp)) return ''
-
-  const elapsedSeconds = Math.round((timestamp - Date.now()) / 1000)
-  const units = [
-    ['year', 60 * 60 * 24 * 365],
-    ['month', 60 * 60 * 24 * 30],
-    ['week', 60 * 60 * 24 * 7],
-    ['day', 60 * 60 * 24],
-    ['hour', 60 * 60],
-    ['minute', 60],
-  ]
-
-  const formatter = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto' })
-  for (const [unit, seconds] of units) {
-    if (Math.abs(elapsedSeconds) >= seconds) {
-      return formatter.format(Math.round(elapsedSeconds / seconds), unit)
-    }
-  }
-
-  return 'just now'
-}

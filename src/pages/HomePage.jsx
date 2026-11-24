@@ -32,7 +32,7 @@ import usePreferencesStore from '../features/settings/store/usePreferencesStore.
 import SettingsModal from '../features/settings/components/SettingsModal.jsx'
 import FigmaIcon from '../components/FigmaIcon.jsx'
 import { filterAndSortLinks, getCollectionCount } from '../features/links/utils/linkUtils.js'
-import { useText } from '../lib/text.js'
+import { formatText } from '../lib/text.js'
 import './HomePage.css'
 
 const sortOptions = [
@@ -44,7 +44,7 @@ const sortOptions = [
 
 export default function HomePage() {
   const navigate = useNavigate()
-  const { t } = useText()
+  const t = formatText
   const user = useDemoAuthStore((state) => state.user)
   const theme = usePreferencesStore((state) => state.theme)
   const toggleTheme = usePreferencesStore((state) => state.toggleTheme)
@@ -203,7 +203,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="app-shell" data-theme={theme}>
+    <div className="app-shell min-h-screen" data-theme={theme}>
       <button
         type="button"
         className={mobileSidebarOpen ? 'mobile-sidebar-backdrop is-open' : 'mobile-sidebar-backdrop'}

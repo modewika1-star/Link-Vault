@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import { FiCheck, FiX } from 'react-icons/fi'
 import linkSchema from '../validation/linkSchema'
-import { useText } from '../../../lib/text.js'
+import api from '../../../lib/axios.js'
+import { formatText } from '../../../lib/text.js'
 
 const emptyValues = {
   title: '',
@@ -15,7 +16,7 @@ const emptyValues = {
 }
 
 export default function LinkModal({ open, link, collections, onClose, onSave }) {
-  const { t } = useText()
+  const t = formatText
   const [previewLoading, setPreviewLoading] = useState(false)
   const formik = useFormik({
     initialValues: link
@@ -86,9 +87,8 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
     setPreviewLoading(true)
     formik.setStatus('')
     try {
-      const response = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`)
-      if (!response.ok) throw new Error('Preview service unavailable')
-      const result = await response.json()
+      const response = await api.get('https://api.microlink.io/', { params: { url } })
+      const result = response.data
       if (result.status !== 'success' || !result.data) throw new Error('No preview found')
 
       const data = result.data
@@ -149,28 +149,28 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
                       strokeWidth="1.16583"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      stroke="#FE9A00"
+                      stroke="var(--lv-color-fe9a00)"
                     />
                     <path
                       d="M11.6582 1.16583V3.4975"
                       strokeWidth="1.16583"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      stroke="#FE9A00"
+                      stroke="var(--lv-color-fe9a00)"
                     />
                     <path
                       d="M12.8243 2.33167H10.4927"
                       strokeWidth="1.16583"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      stroke="#FE9A00"
+                      stroke="var(--lv-color-fe9a00)"
                     />
                     <path
                       d="M1.16602 11.6583C1.16602 12.3018 1.68841 12.8242 2.33185 12.8242C2.97529 12.8242 3.49768 12.3018 3.49768 11.6583C3.49768 11.0149 2.97529 10.4925 2.33185 10.4925C1.68841 10.4925 1.16602 11.0149 1.16602 11.6583H1.16602"
                       strokeWidth="1.16583"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      stroke="#FE9A00"
+                      stroke="var(--lv-color-fe9a00)"
                     />
                   </svg>
                   {previewLoading ? t('Fetching...') : t('Fetch Preview')}

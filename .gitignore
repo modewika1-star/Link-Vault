@@ -1,29 +1,26 @@
-﻿# Dependencies
+# Dependencies
 node_modules/
 
-# Production build
+# Production output
 dist/
 dist-ssr/
 
-# Environment variables
+# Local environment and credentials
 .env
 .env.*
-!.env.example
 
-# Logs
+# Logs and test artifacts
 *.log
 npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*
+coverage/
 
-# Local tooling
+# Local editor and deployment files
 .vscode/
 .idea/
 .vercel/
 
-# OS files
+# Operating system files
 .DS_Store
 Thumbs.db
-
-# Tests and coverage
-coverage/
