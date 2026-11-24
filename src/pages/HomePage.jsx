@@ -32,6 +32,7 @@ import useLinksStore from '../features/links/store/useLinksStore.js'
 import useDemoAuthStore from '../features/auth/store/useDemoAuthStore.js'
 import usePreferencesStore from '../features/settings/store/usePreferencesStore.js'
 import SettingsModal from '../features/settings/components/SettingsModal.jsx'
+import FigmaIcon from '../components/FigmaIcon.jsx'
 import { filterAndSortLinks, getCollectionCount } from '../features/links/utils/linkUtils.js'
 import './HomePage.css'
 
@@ -244,7 +245,7 @@ export default function HomePage() {
       <aside className={mobileSidebarOpen ? 'sidebar is-open' : 'sidebar'}>
         <div className="sidebar-brand">
           <a className="brand-link" href="/" onClick={(event) => { event.preventDefault(); selectView('all') }}>
-            <span className="brand-mark"><FiBookmark /></span>
+            <span className="brand-mark"><FigmaIcon name="brand-mark" fallback={<FiBookmark />} className="figma-icon" /></span>
             <span>LinkVault</span>
           </a>
         </div>
@@ -281,7 +282,7 @@ export default function HomePage() {
               type="button"
               onClick={() => selectView('all')}
             >
-              <span className="nav-item-label"><FiBookmark /> All Bookmarks</span>
+              <span className="nav-item-label"><FigmaIcon name="all-bookmarks" fallback={<FiBookmark />} className="figma-icon" /> All Bookmarks</span>
               <span className="nav-count">{links.length}</span>
             </button>
             <button
@@ -289,7 +290,7 @@ export default function HomePage() {
               type="button"
               onClick={() => selectView('favorites')}
             >
-              <span className="nav-item-label"><FiHeart /> Favorites</span>
+              <span className="nav-item-label"><FigmaIcon name="favorites" fallback={<FiHeart />} className="figma-icon" /> Favorites</span>
               <span className="nav-count">{favoriteCount}</span>
             </button>
           </section>
@@ -298,7 +299,7 @@ export default function HomePage() {
             <div className="nav-section-title-row">
               <div className="nav-section-heading">Collections</div>
               <button className="new-collection-button" type="button" onClick={() => setCollectionModalOpen(true)}>
-                <FiPlus /> New
+                <FigmaIcon name="new-collection" fallback={<FiPlus />} className="figma-icon" /> New
               </button>
             </div>
 
@@ -311,7 +312,7 @@ export default function HomePage() {
                     onClick={() => selectView('collection', collection.id)}
                   >
                     <span className="nav-item-label">
-                      <FiFolder className="collection-folder-icon" style={{ color: collection.color }} />
+                      <FigmaIcon name="collection-folder" fallback={<FiFolder className="collection-folder-icon" style={{ color: collection.color }} />} className="figma-icon collection-folder-icon" />
                       <span className="collection-name">{collection.name}</span>
                     </span>
                     <span className="nav-count">{getCollectionCount(links, collection.id)}</span>
@@ -347,7 +348,7 @@ export default function HomePage() {
           </button>
 
           <label className="search-box">
-            <FiSearch />
+            <FigmaIcon name="search" fallback={<FiSearch />} className="figma-icon" />
             <input
               ref={searchInput}
               type="search"
