@@ -12,6 +12,7 @@ A responsive bookmark manager based on the inspected Figma **Desktop Light mode*
 - Sort by newest, oldest, title A–Z, and title Z–A.
 - Switch between grid and list layouts.
 - Switch between light and dark appearance.
+- Open Settings to manage bookmarks and collections, including multi-select deletion, inline renaming, and assigning multiple bookmarks to a collection.
 - Open Settings to change and persist appearance and layout preferences.
 - Import and export a JSON backup for bookmarks and collections.
 - Original Figma SVG icons and project images, with graceful icon/favicon fallbacks.
@@ -19,15 +20,15 @@ A responsive bookmark manager based on the inspected Figma **Desktop Light mode*
 
 ## Demo account screens
 
-The app includes visual sign-in, registration, password-reset, and sign-out flows. These screens validate email shape, password length, and confirmation fields. A successful sign-in/register stores only a demo profile (name and email) in browser storage. **No password is stored, no real authentication provider is connected, and no reset email is sent.**
+The app includes Figma-styled sign-in, registration, password recovery, six-digit verification, password reset, and sign-out flows. These screens validate email shape, password length, terms acceptance, and confirmation fields. A successful sign-in/register stores only a demo profile (name and email) in browser storage. **No password is stored, no real authentication provider is connected, and no reset email is sent.**
 
-Any syntactically valid email and password meeting the form rules can be used to preview the demo flow.
+Any syntactically valid email and password meeting the form rules can be used to preview the demo flow. The verification screen accepts the demo code `123456`. Google and GitHub buttons are visual previews only.
 
 ## Data and privacy
 
 Bookmarks, collections, theme preferences, and the demo profile are stored in the current browser's localStorage. They are not synchronized between devices or browsers. Use **Export backup** and **Import backup** to move bookmark data.
 
-The initial workspace contains seven sample bookmarks across three collections to illustrate the Figma layout. Sample React, Tailwind CSS, and Hugging Face cards use original Figma project image assets when those files are downloaded; otherwise, the site favicon or icon fallback is shown.
+The initial workspace contains the seven bookmarks and three collections shown in the Figma reference. React, Tailwind CSS, and Hugging Face use original project artwork; remaining cards use the matching Figma placeholder treatment.
 
 ## Original Figma assets
 
