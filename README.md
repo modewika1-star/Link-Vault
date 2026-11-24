@@ -1,140 +1,95 @@
-# Link Vault
+# LinkVault
 
-A link management application built with React and Vite.
+A responsive bookmark manager built with React, Vite, Zustand, Formik, Yup, and Tailwind CSS. The interface follows the inspected Figma **Desktop Light mode** design: a 256px navigation sidebar, Smart Views, Collections, a searchable header, sorting controls, and bookmark cards.
+
+## Features
+
+- Add, edit, and delete bookmarks.
+- Validate titles and allow only HTTP/HTTPS URLs.
+- Add notes and assign bookmarks to collections.
+- Mark bookmarks as favorites and use the Favorites smart view.
+- Create, rename, and delete collections.
+- Search bookmark titles, URLs, and notes.
+- Sort by newest, oldest, title A–Z, or title Z–A.
+- Import and export a JSON backup containing bookmarks and collections.
+- Responsive sidebar and layout for smaller screens.
+- Dynamic website favicons with a local icon fallback.
+- Automatic persistence in browser localStorage.
+
+## Important storage note
+
+This version stores data in the current browser on the current device. It does not include user accounts, a hosted database, or automatic synchronization between browsers/devices. Use **Export backup** and **Import backup** to move your data.
+
+The first run includes seven example bookmarks across three collections to demonstrate the designed layout. You can edit or delete them like any other bookmark.
 
 ## Tech Stack
 
 | Library | Usage |
 |---|---|
-| React | Builds reusable interface components |
-| React DOM | Renders the React application |
-| React Router DOM | Handles client-side navigation and routes |
-| Axios | Provides a centralized HTTP client for API requests |
-| Zustand | Manages shared application state and persisted saved links |
-| Formik | Handles form state, submission, and user input |
-| Yup | Validates link titles and HTTP(S) URLs |
-| Tailwind CSS | Provides utility-first styling |
-| React Icons | Supplies interface icons |
-| Vite | Runs the development server and creates production builds |
-| Oxlint | Checks JavaScript and React code quality |
+| React | Component-based interface |
+| React Router DOM | Client-side routing |
+| Zustand | Application state and persisted bookmarks |
+| Formik | Bookmark forms |
+| Yup | Validation |
+| Tailwind CSS v4 | Utility CSS integration |
+| Custom CSS | Figma-aligned layout and responsive styling |
+| React Icons | Interface icons |
+| Axios | Prepared HTTP client for a future API integration |
+| Vite | Development server and production build |
+| Oxlint | Static code checks |
+| Node.js test runner | Unit tests for search and sorting utilities |
 
 ## Getting Started
 
-### Requirements
-
-- Node.js (a current supported LTS version)
-- npm
-
-### Install dependencies
+Requirements: Node.js 22.12+ (or a Vite-supported Node.js version) and npm.
 
 ```bash
 npm install
-```
-
-### Start the development server
-
-```bash
 npm run dev
 ```
 
-### Create a production build
+## Scripts
 
 ```bash
-npm run build
-```
-
-### Preview the production build
-
-```bash
-npm run preview
-```
-
-### Run lint checks
-
-```bash
+npm test
 npm run lint
+npm run build
+npm run preview
 ```
 
 ## Project Structure
 
 ```text
 src/
-├── app/                  # Application setup and routing
-├── assets/               # Images, icons, and fonts
-├── components/           # Reusable UI and shared components
-├── features/
-│   └── links/
-│       ├── components/   # Link feature components
-│       ├── hooks/        # Feature-specific hooks
-│       ├── services/     # Link API operations
-│       ├── store/        # Link state management
-│       └── validation/   # Form validation schemas
-├── hooks/                # Shared custom hooks
-├── layouts/              # Page layouts
-├── lib/                  # Configured third-party clients
-├── pages/                # Route-level pages
-├── stores/               # Shared application stores
-├── styles/               # Design tokens and styling
-├── utils/                # Shared utility functions
+├── app/                         # Application routing
+├── features/links/
+│   ├── components/
+│   │   ├── CollectionModal.jsx
+│   │   ├── LinkCard.jsx
+│   │   └── LinkModal.jsx
+│   ├── services/                # Prepared API service layer
+│   ├── store/                   # Zustand state and local persistence
+│   ├── utils/                   # Search, sorting, and display helpers
+│   └── validation/              # Yup schemas
+├── lib/                         # Axios client
+├── pages/                       # Route-level pages and layout styles
+├── styles/                      # Design tokens
 ├── App.jsx
 ├── index.css
 └── main.jsx
 
-public/
-└── assets/               # Static public assets
-
-docs/                     # Project documentation
+docs/
+└── superpowers/plans/            # Implementation plan
+tests/                            # Node.js unit tests
 ```
 
-## Library Usage
+## Data backup format
 
-### React Router DOM
+Backups are JSON files containing the app name, version, export timestamp, collections, and bookmarks. Import merges records into the current vault and skips duplicate URLs.
 
-Routes are configured in `src/app/router.jsx`. Add new route components there.
+## Security and privacy
 
-### Axios
-
-The configured Axios instance is in `src/lib/axios.js`. Set `VITE_API_BASE_URL` in your local environment when an API endpoint is available. The current interface uses local browser storage and does not require an API.
-
-### Zustand
-
-The links store is in `src/features/links/store/useLinksStore.js`. It provides actions to add and remove links and persists the saved links in browser `localStorage`.
-
-Saved links are local to the current browser and device. They are not synchronized across accounts or devices. Clearing this site's browser storage removes the saved links.
-
-### Formik
-
-The link form in `src/features/links/components/LinkForm.jsx` uses Formik to manage field values, validation state, and submission.
-
-### Yup
-
-The schema in `src/features/links/validation/linkSchema.js` validates link titles and requires URLs to use the HTTP or HTTPS protocol.
-
-### Tailwind CSS
-
-Tailwind CSS v4 is integrated through the Vite plugin in `vite.config.js`. Global styles are loaded from `src/index.css`.
-
-### React Icons
-
-Icons are imported from `react-icons/fi` where needed.
-
-## Design System
-
-Design tokens are centralized in `src/styles/design-tokens.css`.
-
-The token file defines:
-
-- Colors
-- Typography
-- Spacing
-- Border radii
-- Layout dimensions
-- Shadows
-
-Use existing design tokens instead of introducing arbitrary repeated design values. Replace starter token values with the approved Figma values during final UI implementation.
-
-## Environment Variables
-
-Copy `.env.example` to `.env` and configure the values required for your local environment.
-
-Never commit real secrets or private environment files.
+- Only HTTP and HTTPS bookmark links are accepted.
+- Imported JSON is validated before records are added.
+- No user credentials or API secrets are required for local use.
+- Do not commit real environment secrets. Use `.env.example` as the variable template.
