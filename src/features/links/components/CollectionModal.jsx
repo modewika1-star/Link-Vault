@@ -10,6 +10,9 @@ export default function CollectionModal({ open, onClose, onSave }) {
 
   useEffect(() => {
     if (!open) return undefined
+    setName('')
+    setColor(colors[0])
+    setError('')
     const onKeyDown = (event) => {
       if (event.key === 'Escape') onClose()
     }
