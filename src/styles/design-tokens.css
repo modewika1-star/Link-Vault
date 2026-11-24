@@ -1,73 +1,28 @@
-﻿:root {
-  /* Colors */
-  --ds-color-brand: #6257e8;
-  --ds-color-brand-hover: #5045d4;
-  --ds-color-canvas: #f8f9fc;
-  --ds-color-surface: #ffffff;
-  --ds-color-ink: #191a24;
-  --ds-color-ink-muted: #777b8c;
-  --ds-color-line: #e7e8ef;
-  --ds-color-success: #16865b;
-  --ds-color-danger: #d64545;
-
-  /* Typography */
-  --ds-font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-  --ds-font-size-xs: 0.75rem;
-  --ds-font-size-sm: 0.875rem;
-  --ds-font-size-base: 1rem;
-  --ds-font-size-lg: 1.125rem;
-  --ds-font-size-xl: 1.25rem;
-  --ds-font-size-2xl: 1.5rem;
-  --ds-font-size-3xl: 1.875rem;
-
-  /* Spacing */
-  --ds-space-page: 1.5rem;
-  --ds-space-section: 3rem;
-  --ds-space-card: 1.25rem;
-
-  /* Radius */
-  --ds-radius-control: 0.625rem;
-  --ds-radius-card: 1rem;
-  --ds-radius-panel: 1.5rem;
-  --ds-radius-pill: 9999px;
-
-  /* Layout */
-  --ds-container-width: 76rem;
-  --ds-sidebar-width: 16rem;
-
-  /* Shadows */
-  --ds-shadow-card: 0 2px 12px rgb(20 24 40 / 5%);
+:root{
+  --lv-canvas:#f8fafc;
+  --lv-sidebar:#f8fafc;
+  --lv-surface:#fff;
+  --lv-ink:#0f172b;
+  --lv-ink-soft:#314158;
+  --lv-secondary:#45556c;
+  --lv-muted:#90a1b9;
+  --lv-line:#e2e8f0;
+  --lv-line-soft:#edf1f6;
+  --lv-success:#21845b;
+  --lv-danger:#c74650;
+  --lv-shadow-card:0 1px 2px rgb(15 23 42 / 5%);
+  --lv-shadow-menu:0 12px 30px rgb(15 23 42 / 12%);
+  --lv-font-family:"Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
 }
-
-@theme inline {
-  --color-brand: var(--ds-color-brand);
-  --color-brand-hover: var(--ds-color-brand-hover);
-  --color-canvas: var(--ds-color-canvas);
-  --color-surface: var(--ds-color-surface);
-  --color-ink: var(--ds-color-ink);
-  --color-ink-muted: var(--ds-color-ink-muted);
-  --color-line: var(--ds-color-line);
-  --color-success: var(--ds-color-success);
-  --color-danger: var(--ds-color-danger);
-
-  --font-sans: var(--ds-font-family);
-
-  --text-token-xs: var(--ds-font-size-xs);
-  --text-token-sm: var(--ds-font-size-sm);
-  --text-token-base: var(--ds-font-size-base);
-  --text-token-lg: var(--ds-font-size-lg);
-  --text-token-xl: var(--ds-font-size-xl);
-  --text-token-2xl: var(--ds-font-size-2xl);
-  --text-token-3xl: var(--ds-font-size-3xl);
-
-  --spacing-page: var(--ds-space-page);
-  --spacing-section: var(--ds-space-section);
-  --spacing-card: var(--ds-space-card);
-
-  --radius-control: var(--ds-radius-control);
-  --radius-card: var(--ds-radius-card);
-  --radius-panel: var(--ds-radius-panel);
-  --radius-pill: var(--ds-radius-pill);
-
-  --shadow-card: var(--ds-shadow-card);
+@theme inline{
+  --color-brand:var(--lv-ink);
+  --color-canvas:var(--lv-canvas);
+  --color-surface:var(--lv-surface);
+  --color-ink:var(--lv-ink);
+  --color-ink-muted:var(--lv-muted);
+  --color-line:var(--lv-line);
+  --color-success:var(--lv-success);
+  --color-danger:var(--lv-danger);
+  --font-sans:var(--lv-font-family);
+  --shadow-card:var(--lv-shadow-card);
 }
