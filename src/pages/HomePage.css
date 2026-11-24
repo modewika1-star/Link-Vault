@@ -389,3 +389,12 @@
 .bookmark-grid.is-list .collection-tag{max-width:150px}
 @media(max-width:760px){.page-heading-row{align-items:center}.page-heading-copy h1{font-size:22px}.open-all-button{min-height:32px;padding:0 9px}}
 @media(max-width:520px){.bookmark-grid.is-list .bookmark-card{min-height:120px;flex-direction:row}.bookmark-grid.is-list .bookmark-card-copy{padding:10px 8px}.bookmark-grid.is-list .bookmark-card-footer{min-width:106px;padding:8px}.bookmark-grid.is-list .bookmark-card-actions{gap:0}.bookmark-grid.is-list .bookmark-action{width:24px;height:26px;flex-basis:24px}}
+
+.bookmark-meta-line{justify-content:space-between;gap:8px;overflow:visible}
+.bookmark-domain{max-width:56%;flex:1 1 auto}
+.collection-tag{max-width:44%;flex:0 1 auto}
+.bookmark-card-footer{justify-content:flex-end}
+.bookmark-card-actions{margin-left:auto}
+.bookmark-grid.is-list .bookmark-meta-line{gap:7px}
+.bookmark-grid.is-list .bookmark-domain{max-width:58%}
+.bookmark-grid.is-list .collection-tag{max-width:42%}
