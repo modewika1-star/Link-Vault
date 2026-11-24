@@ -27,6 +27,8 @@ const linkSchema = Yup.object({
       },
     ),
 
+  description: Yup.string().max(500, 'Description must be 500 characters or less'),
+  coverImageUrl: Yup.string().trim().url('Enter a valid image URL').nullable().transform((value) => value || null),
   notes: Yup.string().max(2000, 'Notes must be 2,000 characters or less'),
   collectionId: Yup.string().nullable(),
   favorite: Yup.boolean(),
