@@ -13,7 +13,7 @@ export function filterAndSortLinks(links, options = {}) {
 
     if (!normalizedQuery) return true
 
-    const searchable = [link.title, link.url, link.notes]
+    const searchable = [link.title, link.url, link.description, link.notes]
       .filter(Boolean)
       .join(' ')
       .toLocaleLowerCase()
