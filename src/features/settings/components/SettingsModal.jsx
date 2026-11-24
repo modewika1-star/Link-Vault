@@ -5,6 +5,7 @@ import {
   FiArrowLeft, FiLayers, FiSearch, FiLink2, FiSave,
 } from 'react-icons/fi'
 import './SettingsModal.css'
+import { useTranslation } from '../../../i18n/translations.js'
 
 export default function SettingsModal({
   open,
@@ -23,6 +24,7 @@ export default function SettingsModal({
   onCreateCollection,
   onSetCollectionLinks,
 }) {
+  const { t } = useTranslation()
   const [section, setSection] = useState('home')
   const [search, setSearch] = useState('')
   const [selectedLinks, setSelectedLinks] = useState([])
@@ -89,7 +91,7 @@ export default function SettingsModal({
 
   const deleteSelectedLinks = () => {
     if (!selectedLinks.length) return
-    if (!window.confirm(`Delete ${selectedLinks.length} selected bookmark(s)? This cannot be undone.`)) return
+    if (!window.confirm(t('Delete {count} selected bookmark(s)? This cannot be undone.', { count: selectedLinks.length }))) return
     onDeleteBookmarks?.(selectedLinks)
     setSelectedLinks([])
     setNotice('Selected bookmarks deleted.')
@@ -97,7 +99,7 @@ export default function SettingsModal({
 
   const deleteSelectedCollections = () => {
     if (!selectedCollections.length) return
-    if (!window.confirm(`Delete ${selectedCollections.length} selected collection(s)? Their bookmarks will remain in your vault as uncategorized.`)) return
+    if (!window.confirm(t('Delete {count} selected collection(s)? Their bookmarks will remain in your vault as uncategorized.', { count: selectedCollections.length }))) return
     onDeleteCollections?.(selectedCollections)
     setSelectedCollections([])
     setNotice('Selected collections deleted. Their bookmarks were kept.')
@@ -156,23 +158,23 @@ export default function SettingsModal({
           <div className="settings-header-copy">
             {section !== 'home' && (
               <button className="settings-back-button" type="button" onClick={() => { setSection('home'); setCollectionLinksId(null); setNotice('') }}>
-                <FiArrowLeft /> Settings
+                <FiArrowLeft /> {t('Settings')}
               </button>
             )}
-            <span className="settings-eyebrow">WORKSPACE CONTROL</span>
+            <span className="settings-eyebrow">{t('WORKSPACE CONTROL')}</span>
             <h2 id="settings-title">
-              {collectionLinksId ? `Manage links · ${currentCollection?.name || 'Collection'}`
-                : section === 'bookmarks' ? 'Manage Bookmarks'
-                  : section === 'collections' ? 'Manage Collections' : 'Settings'}
+              {collectionLinksId ? t('Manage links · {name}', { name: currentCollection?.name || t('Collection') })
+                : section === 'bookmarks' ? t('Manage Bookmarks')
+                  : section === 'collections' ? t('Manage Collections') : t('Settings')}
             </h2>
             <p>
-              {collectionLinksId ? 'Choose which saved links belong to this collection.'
-                : section === 'bookmarks' ? 'Edit, organize, or remove saved links.'
-                  : section === 'collections' ? 'Rename collections, remove them, or organize their links.'
-                    : 'Manage your library and personalize its appearance.'}
+              {collectionLinksId ? t('Choose which saved links belong to this collection.')
+                : section === 'bookmarks' ? t('Edit, organize, or remove saved links.')
+                  : section === 'collections' ? t('Rename collections, remove them, or organize their links.')
+                    : t('Manage your library and personalize its appearance.')}
             </p>
           </div>
-          <button className="icon-button subtle" type="button" onClick={onClose} aria-label="Close settings"><FiX /></button>
+          <button className="icon-button subtle" type="button" onClick={onClose} aria-label={t('Close settings')}><FiX /></button>
         </header>
 
         {section === 'home' && (
@@ -180,12 +182,12 @@ export default function SettingsModal({
             <div className="settings-manager-choices">
               <button type="button" className="settings-manager-choice" onClick={() => { setSection('bookmarks'); setNotice('') }}>
                 <span className="settings-manager-choice-icon"><FiBookmark /></span>
-                <span><strong>Manage Bookmarks</strong><small>{links.length} saved links · Edit, add, or delete</small></span>
+                <span><strong>{t('Manage Bookmarks')}</strong><small>{t('{count} saved links · Edit, add, or delete', { count: links.length })}</small></span>
                 <FiArrowLeft className="settings-choice-arrow" />
               </button>
               <button type="button" className="settings-manager-choice" onClick={() => { setSection('collections'); setNotice('') }}>
                 <span className="settings-manager-choice-icon"><FiFolder /></span>
-                <span><strong>Manage Collections</strong><small>{collections.length} collections · Rename, delete, or add links</small></span>
+                <span><strong>{t('Manage Collections')}</strong><small>{t('{count} collections · Rename, delete, or add links', { count: collections.length })}</small></span>
                 <FiArrowLeft className="settings-choice-arrow" />
               </button>
             </div>
@@ -193,17 +195,17 @@ export default function SettingsModal({
             <section className="settings-section">
               <div className="settings-section-heading">
                 <span className="settings-section-icon"><FiMonitor /></span>
-                <span><strong>Appearance</strong><small>Choose the workspace color theme.</small></span>
+                <span><strong>{t('Appearance')}</strong><small>{t('Choose the workspace color theme.')}</small></span>
               </div>
               <div className="settings-choice-grid">
                 <button type="button" className={theme === 'light' ? 'settings-choice is-selected' : 'settings-choice'} onClick={() => onThemeChange('light')} aria-pressed={theme === 'light'}>
                   <span className="settings-choice-preview light-preview"><FiSun /></span>
-                  <span>Light</span>
-                  {theme === 'light' && <b>Selected</b>}
+                  <span>{t('Light')}</span>
+                  {theme === 'light' && <b>{t('Selected')}</b>}
                 </button>
                 <button type="button" className={theme === 'dark' ? 'settings-choice is-selected' : 'settings-choice'} onClick={() => onThemeChange('dark')} aria-pressed={theme === 'dark'}>
                   <span className="settings-choice-preview dark-preview"><FiMoon /></span>
-                  <span>Dark</span>
+                  <span>{t('Dark')}</span>
                   {theme === 'dark' && <b>Selected</b>}
                 </button>
               </div>
@@ -212,17 +214,17 @@ export default function SettingsModal({
             <section className="settings-section">
               <div className="settings-section-heading">
                 <span className="settings-section-icon"><FiLayout /></span>
-                <span><strong>Bookmark layout</strong><small>Choose how your saved links are displayed.</small></span>
+                <span><strong>{t('Bookmark layout')}</strong><small>{t('Choose how your saved links are displayed.')}</small></span>
               </div>
               <div className="settings-choice-grid">
                 <button type="button" className={viewMode === 'grid' ? 'settings-choice is-selected' : 'settings-choice'} onClick={() => onViewModeChange('grid')} aria-pressed={viewMode === 'grid'}>
                   <span className="settings-choice-preview layout-preview"><FiGrid /></span>
-                  <span>Grid view</span>
+                  <span>{t('Grid view')}</span>
                   {viewMode === 'grid' && <b>Selected</b>}
                 </button>
                 <button type="button" className={viewMode === 'list' ? 'settings-choice is-selected' : 'settings-choice'} onClick={() => onViewModeChange('list')} aria-pressed={viewMode === 'list'}>
                   <span className="settings-choice-preview layout-preview"><FiList /></span>
-                  <span>List view</span>
+                  <span>{t('List view')}</span>
                   {viewMode === 'list' && <b>Selected</b>}
                 </button>
               </div>
@@ -233,23 +235,23 @@ export default function SettingsModal({
         {section === 'bookmarks' && !collectionLinksId && (
           <div className="settings-body manager-body">
             <div className="manager-toolbar">
-              <label className="manager-search"><FiSearch /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search bookmarks..." /></label>
-              <button className="button button-secondary" type="button" onClick={onAddBookmark}><FiPlus /> Add Bookmark</button>
+              <label className="manager-search"><FiSearch /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder={t('Search bookmarks...')} /></label>
+              <button className="button button-secondary" type="button" onClick={onAddBookmark}><FiPlus /> {t('Add Bookmark')}</button>
             </div>
             <div className="manager-selection-row">
-              <label><input type="checkbox" checked={filteredLinks.length > 0 && filteredLinks.every((link) => selectedLinks.includes(link.id))} onChange={toggleAllLinks} /> Select all ({filteredLinks.length})</label>
-              <button className="manager-danger-button" type="button" disabled={!selectedLinks.length} onClick={deleteSelectedLinks}><FiTrash2 /> Delete selected ({selectedLinks.length})</button>
+              <label><input type="checkbox" checked={filteredLinks.length > 0 && filteredLinks.every((link) => selectedLinks.includes(link.id))} onChange={toggleAllLinks} /> {t('Select all ({count})', { count: filteredLinks.length })}</label>
+              <button className="manager-danger-button" type="button" disabled={!selectedLinks.length} onClick={deleteSelectedLinks}><FiTrash2 /> {t('Delete selected ({count})', { count: selectedLinks.length })}</button>
             </div>
             <div className="manager-list">
               {filteredLinks.map((link) => (
                 <div className="manager-list-row" key={link.id}>
-                  <input type="checkbox" checked={selectedLinks.includes(link.id)} onChange={() => toggleId(selectedLinks, link.id, setSelectedLinks)} aria-label={`Select ${link.title}`} />
+                  <input type="checkbox" checked={selectedLinks.includes(link.id)} onChange={() => toggleId(selectedLinks, link.id, setSelectedLinks)} aria-label={t('Select {title}', { title: link.title })} />
                   <span className="manager-row-icon"><FiLink2 /></span>
                   <span className="manager-row-copy"><strong>{link.title}</strong><small>{link.url}</small></span>
                   <button className="manager-icon-action" type="button" onClick={() => onEditBookmark?.(link)} aria-label={`Edit ${link.title}`} title="Edit"><FiEdit2 /></button>
                 </div>
               ))}
-              {filteredLinks.length === 0 && <p className="manager-empty">No bookmarks match your search.</p>}
+              {filteredLinks.length === 0 && <p className="manager-empty">{t('No bookmarks match your search.')}</p>}
             </div>
           </div>
         )}
@@ -257,32 +259,32 @@ export default function SettingsModal({
         {section === 'collections' && !collectionLinksId && (
           <div className="settings-body manager-body">
             <form className="manager-create-row" onSubmit={createCollection}>
-              <input value={newCollectionName} onChange={(event) => { setNewCollectionName(event.target.value); setNotice('') }} maxLength={32} placeholder="New collection name..." aria-label="New collection name" />
-              <button className="button button-primary" type="submit" disabled={!newCollectionName.trim()}><FiPlus /> Create</button>
+              <input value={newCollectionName} onChange={(event) => { setNewCollectionName(event.target.value); setNotice('') }} maxLength={32} placeholder={t('New collection name...')} aria-label={t('New collection name')} />
+              <button className="button button-primary" type="submit" disabled={!newCollectionName.trim()}><FiPlus /> {t('Create')}</button>
             </form>
             <div className="manager-selection-row">
-              <label><input type="checkbox" checked={collections.length > 0 && collections.every((item) => selectedCollections.includes(item.id))} onChange={toggleAllCollections} /> Select all ({collections.length})</label>
-              <button className="manager-danger-button" type="button" disabled={!selectedCollections.length} onClick={deleteSelectedCollections}><FiTrash2 /> Delete selected ({selectedCollections.length})</button>
+              <label><input type="checkbox" checked={collections.length > 0 && collections.every((item) => selectedCollections.includes(item.id))} onChange={toggleAllCollections} /> {t('Select all ({count})', { count: collections.length })}</label>
+              <button className="manager-danger-button" type="button" disabled={!selectedCollections.length} onClick={deleteSelectedCollections}><FiTrash2 /> {t('Delete selected ({count})', { count: selectedCollections.length })}</button>
             </div>
             <div className="manager-list">
               {collections.map((collection) => (
                 <div className="manager-collection-row" key={collection.id}>
-                  <input type="checkbox" checked={selectedCollections.includes(collection.id)} onChange={() => toggleId(selectedCollections, collection.id, setSelectedCollections)} aria-label={`Select ${collection.name}`} />
+                  <input type="checkbox" checked={selectedCollections.includes(collection.id)} onChange={() => toggleId(selectedCollections, collection.id, setSelectedCollections)} aria-label={t('Select {name}', { name: collection.name })} />
                   <span className="manager-collection-dot" style={{ '--collection-color': collection.color }} />
                   {editingCollectionId === collection.id ? (
                     <input className="manager-rename-input" value={editingCollectionName} onChange={(event) => setEditingCollectionName(event.target.value)} autoFocus />
                   ) : (
-                    <span className="manager-row-copy"><strong>{collection.name}</strong><small>{links.filter((link) => link.collectionId === collection.id).length} bookmarks</small></span>
+                    <span className="manager-row-copy"><strong>{collection.name}</strong><small>{t('{count} bookmarks', { count: links.filter((link) => link.collectionId === collection.id).length })}</small></span>
                   )}
                   {editingCollectionId === collection.id ? (
-                    <button className="manager-icon-action" type="button" onClick={() => saveRename(collection.id)} aria-label="Save collection name"><FiSave /></button>
+                    <button className="manager-icon-action" type="button" onClick={() => saveRename(collection.id)} aria-label={t('Save collection name')}><FiSave /></button>
                   ) : (
-                    <button className="manager-icon-action" type="button" onClick={() => beginRename(collection)} aria-label={`Rename ${collection.name}`} title="Rename"><FiEdit2 /></button>
+                    <button className="manager-icon-action" type="button" onClick={() => beginRename(collection)} aria-label={t('Rename {name}', { name: collection.name })} title={t('Rename')}><FiEdit2 /></button>
                   )}
-                  <button className="manager-text-action" type="button" onClick={() => openCollectionLinks(collection)}><FiLayers /> Manage links</button>
+                  <button className="manager-text-action" type="button" onClick={() => openCollectionLinks(collection)}><FiLayers /> {t('Manage links')}</button>
                 </div>
               ))}
-              {collections.length === 0 && <p className="manager-empty">No collections yet. Create one above.</p>}
+              {collections.length === 0 && <p className="manager-empty">{t('No collections yet. Create one above.')}</p>}
             </div>
           </div>
         )}
@@ -290,8 +292,8 @@ export default function SettingsModal({
         {collectionLinksId && currentCollection && (
           <div className="settings-body manager-body">
             <div className="manager-selection-row">
-              <label><input type="checkbox" checked={links.length > 0 && links.every((link) => collectionLinkSelection.includes(link.id))} onChange={() => setCollectionLinkSelection(collectionLinkSelection.length === links.length ? [] : links.map((link) => link.id))} /> Select all bookmarks</label>
-              <span className="manager-selected-count">{collectionLinkSelection.length} selected</span>
+              <label><input type="checkbox" checked={links.length > 0 && links.every((link) => collectionLinkSelection.includes(link.id))} onChange={() => setCollectionLinkSelection(collectionLinkSelection.length === links.length ? [] : links.map((link) => link.id))} /> {t('Select all bookmarks')}</label>
+              <span className="manager-selected-count">{t('{count} selected', { count: collectionLinkSelection.length })}</span>
             </div>
             <div className="manager-list">
               {links.map((link) => (
@@ -299,24 +301,24 @@ export default function SettingsModal({
                   <input type="checkbox" checked={collectionLinkSelection.includes(link.id)} onChange={() => toggleId(collectionLinkSelection, link.id, setCollectionLinkSelection)} />
                   <span className="manager-row-icon"><FiLink2 /></span>
                   <span className="manager-row-copy"><strong>{link.title}</strong><small>{link.url}</small></span>
-                  {link.collectionId === currentCollection.id && <span className="manager-current-tag">In collection</span>}
+                  {link.collectionId === currentCollection.id && <span className="manager-current-tag">{t('In collection')}</span>}
                 </label>
               ))}
-              {links.length === 0 && <p className="manager-empty">Add bookmarks to your vault first.</p>}
+              {links.length === 0 && <p className="manager-empty">{t('Add bookmarks to your vault first.')}</p>}
             </div>
             <div className="manager-inline-actions">
-              <button className="button button-secondary" type="button" onClick={() => setCollectionLinksId(null)}>Cancel</button>
-              <button className="button button-primary" type="button" onClick={saveCollectionLinks}><FiCheck /> Save links</button>
+              <button className="button button-secondary" type="button" onClick={() => setCollectionLinksId(null)}>{t('Cancel')}</button>
+              <button className="button button-primary" type="button" onClick={saveCollectionLinks}><FiCheck /> {t('Save links')}</button>
             </div>
           </div>
         )}
 
-        {notice && <div className="settings-notice" role="status">{notice}</div>}
+        {notice && <div className="settings-notice" role="status">{t(notice)}</div>}
         {section === 'home' && (
-          <div className="settings-info-note">Settings and saved library data are stored in this browser.</div>
+          <div className="settings-info-note">{t('Settings and saved library data are stored in this browser.')}</div>
         )}
         <footer className="settings-footer">
-          <button className="button button-secondary" type="button" onClick={onClose}>Close</button>
+          <button className="button button-secondary" type="button" onClick={onClose}>{t('Close')}</button>
         </footer>
       </section>
     </div>
