@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
-import { FiCheck, FiX, FiZap } from 'react-icons/fi'
+import { FiCheck, FiX } from 'react-icons/fi'
 import linkSchema from '../validation/linkSchema'
 
 const emptyValues = {
@@ -133,7 +133,24 @@ export default function LinkModal({ open, link, collections, onClose, onSave }) 
                   aria-invalid={Boolean(urlError)}
                 />
                 <button className="preview-button" type="button" onClick={fetchPreview} disabled={previewLoading}>
-                  <FiZap />
+                  <svg
+                    width="13.99"
+                    height="13.99"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <circle cx="7" cy="7" r="5.83" stroke="#FE9A00" strokeWidth="1.16583" />
+                    <path
+                      d="M11.67 1.17V3.5M10.5 2.33H12.83M1.17 10.5H3.5V12.83"
+                      stroke="#FE9A00"
+                      strokeWidth="1.16583"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                   {previewLoading ? 'Fetching...' : 'Fetch Preview'}
                 </button>
               </div>
