@@ -277,7 +277,11 @@ const useLinksStore = create(
         collections: state.collections,
       }),
       migrate: (persistedState) => ({
-        links: Array.isArray(persistedState?.links) ? persistedState.links : [],
+        links: Array.isArray(persistedState?.links) && persistedState.links.length > 0
+          ? persistedState.links
+          : Array.isArray(persistedState?.collections)
+            ? []
+            : demoLinks,
         collections: Array.isArray(persistedState?.collections)
           ? persistedState.collections
           : defaultCollections,
