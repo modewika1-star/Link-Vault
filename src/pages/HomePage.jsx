@@ -396,8 +396,12 @@ export default function HomePage() {
             </section>
           )}
 
-          <footer className="content-footer">
-            <span>{t('LinkVault · Personal bookmark workspace')}</span>
+          <footer className="content-footer site-credit-footer" dir="ltr">
+            <span className="site-credit-left">
+              Created by <a href="https://7ijazi.vercel.app/" target="_blank" rel="noopener noreferrer">7ijazi</a>
+            </span>
+            <span className="site-credit-center">{t('LinkVault · Personal bookmark workspace')}</span>
+            <span className="site-credit-right">Made in 2026</span>
           </footer>
         </div>
       </main>
